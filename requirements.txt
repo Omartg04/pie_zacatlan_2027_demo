@@ -1,0 +1,13 @@
+streamlit
+pandas
+numpy
+folium
+streamlit-folium
+plotly
+geopandas
+scikit-learn
+scipy
+prince
+kmodes
+requests
+anthropic
