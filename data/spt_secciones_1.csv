@@ -1,0 +1,34 @@
+seccion,ambito_iter,activa,SPT,clasificacion,tactica_recomendada,score_electoral_norm,score_demografico,score_arquetipos,score_cobertura,pct_no_alcanzados,pct_persuadibles,pct_nucleo_duro,pct_no_convertibles,arq_dominante,entrevistas,fuente_arquetipos,score_electoral_parcial
+2486,urbano,True,71.48,Prioritaria,Brigadas de primer contacto urgentes,76.09,37.95,93.85,100.0,56.9,38.4,4.7,0.0,R1,0,proyectado,False
+2471,rural_marginal,True,70.99,Prioritaria,Brigadas de primer contacto urgentes,82.13,67.56,62.86,62.64,54.6,25.4,9.1,10.8,R1,23,encuesta,False
+2489,rural_marginal,True,70.8,Prioritaria,Brigadas primer contacto + cierre,61.7,79.45,61.47,100.0,47.3,35.6,5.1,11.9,R1,0,proyectado,False
+2488,rural_marginal,True,70.72,Prioritaria,Brigadas primer contacto + cierre,100.0,67.82,61.47,0.0,47.3,35.6,5.1,11.9,R1,26,encuesta,False
+2483,urbano,True,61.72,Consolidacion,Activacion y cierre de voto,61.61,37.76,75.32,100.0,35.9,60.1,0.0,4.0,R0,0,proyectado,False
+2896,rural_media,True,57.97,Consolidacion,Brigadas de primer contacto urgentes,71.94,40.95,42.04,100.0,53.5,16.2,26.8,3.5,U1,0,proyectado,True
+2809,rural_media,True,54.67,Consolidacion,Activacion y cierre de voto,60.56,40.95,48.89,89.62,26.2,60.7,0.0,13.1,R0,9,encuesta,True
+2464,rural_media,True,53.68,Consolidacion,Activacion y cierre de voto,75.33,22.98,41.66,100.0,27.4,55.0,3.8,13.8,R0,0,proyectado,False
+2473,urbano,True,51.91,Consolidacion,Brigadas de primer contacto urgentes,26.09,40.38,93.85,72.06,56.9,38.4,4.7,0.0,R1,28,encuesta,False
+2467,urbano,True,50.88,Consolidacion,Brigadas de primer contacto urgentes,44.8,23.34,83.91,72.23,68.4,15.9,15.7,0.0,U1,16,encuesta,False
+2487,rural_marginal,True,50.5,Consolidacion,Brigadas primer contacto + cierre,24.0,55.75,61.47,100.0,47.3,35.6,5.1,11.9,R1,0,proyectado,False
+2485,rural_media,True,49.76,Consolidacion,Activacion y cierre de voto,76.24,33.65,41.66,25.65,27.4,55.0,3.8,13.8,R0,31,encuesta,False
+2472,rural_marginal,True,49.25,Consolidacion,Brigadas de primer contacto urgentes,0.0,78.47,62.86,100.0,54.6,25.4,9.1,10.8,R1,0,proyectado,False
+2470,urbano,True,49.06,Consolidacion,Brigadas de primer contacto urgentes,11.34,39.3,100.0,83.0,64.9,29.7,0.0,5.4,R1,17,encuesta,False
+2478,urbano,True,48.86,Consolidacion,Presencia regular y activacion de multiplicadores,67.38,33.76,28.02,81.4,33.3,39.0,17.2,10.5,R1,46,encuesta,False
+2475,urbano,True,48.45,Consolidacion,Activacion y cierre de voto,29.5,40.69,75.32,70.9,35.9,60.1,0.0,4.0,R0,21,encuesta,False
+2808,rural_media,True,48.07,Consolidacion,Brigadas de primer contacto urgentes,43.63,40.95,42.04,100.0,53.5,16.2,26.8,3.5,U1,0,proyectado,True
+2460,urbano,True,46.42,Consolidacion,Brigadas de primer contacto urgentes,35.34,23.28,68.27,100.0,56.5,25.5,11.7,6.3,U1,0,proyectado,False
+2463,urbano,True,44.33,Consolidacion,Brigadas de primer contacto urgentes,23.76,15.8,99.77,63.33,63.8,31.3,0.0,5.0,U1,25,encuesta,False
+2484,urbano,True,42.93,Consolidacion,Presencia regular y activacion de multiplicadores,44.56,32.17,43.3,68.64,33.5,46.8,9.1,10.6,R0,55,encuesta,False
+2476,rural_media,True,42.93,Consolidacion,Brigadas de primer contacto urgentes,20.04,51.34,42.04,100.0,53.5,16.2,26.8,3.5,U1,0,proyectado,False
+2727,rural_media,True,42.52,Consolidacion,Brigadas de primer contacto urgentes,35.37,40.95,42.04,73.47,53.5,16.2,26.8,3.5,U1,23,encuesta,True
+2481,urbano,True,42.15,Consolidacion,Brigadas de primer contacto urgentes,25.15,28.47,63.12,90.28,55.7,24.0,3.7,16.6,U1,23,encuesta,False
+2480,urbano,True,42.06,Consolidacion,Brigadas primer contacto + cierre,39.33,33.98,41.9,76.29,36.1,42.1,15.7,6.0,R0,35,encuesta,False
+2466,rural_media,True,41.96,Consolidacion,Activacion y cierre de voto,40.05,25.08,41.66,100.0,27.4,55.0,3.8,13.8,R0,0,proyectado,False
+2474,urbano,True,41.66,Consolidacion,Brigadas primer contacto + cierre,8.01,44.61,77.89,60.02,46.9,45.0,4.1,4.1,R1,21,encuesta,False
+2465,urbano,True,41.42,Consolidacion,Brigadas de primer contacto urgentes,35.76,20.27,68.27,57.56,56.5,25.5,11.7,6.3,U1,39,encuesta,False
+2895,rural_media,True,37.42,Mantenimiento,Activar base solida unicamente,52.13,40.95,0.0,68.85,25.8,35.4,26.0,12.8,R0,27,encuesta,True
+2477,rural_media,True,36.75,Mantenimiento,Activar base solida unicamente,8.01,45.12,41.66,100.0,27.4,55.0,3.8,13.8,R0,0,proyectado,False
+2482,urbano,True,34.62,Mantenimiento,Activar base solida unicamente,17.32,34.52,45.67,67.82,48.3,25.9,13.8,12.0,R1,23,encuesta,False
+2461,urbano,True,33.96,Mantenimiento,Activar base solida unicamente,40.11,15.73,40.19,51.57,49.9,20.5,19.3,10.3,U1,33,encuesta,False
+2469,rural_media,True,32.37,Mantenimiento,Activar base solida unicamente,20.04,16.46,41.66,100.0,27.4,55.0,3.8,13.8,R0,0,proyectado,False
+2462,urbano,True,30.74,Mantenimiento,Activar base solida unicamente,17.96,14.69,40.19,100.0,49.9,20.5,19.3,10.3,U1,0,proyectado,False

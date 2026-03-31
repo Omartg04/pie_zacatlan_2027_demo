@@ -1,0 +1,262 @@
+variable,codigo,etiqueta,es_escala_compartida
+sexo_cod,1,Masculino,False
+sexo_cod,2,Femenino,False
+vive_municipio,1,Sí,False
+vive_municipio,2,No,False
+ocupacion,1,Actividades del hogar / Ama de casa,False
+ocupacion,2,Trabajador(a) en el sector privado,False
+ocupacion,3,Trabajador(a) en el gobierno,False
+ocupacion,4,Profesionista independiente,False
+ocupacion,5,Trabajador(a) por cuenta propia,False
+ocupacion,6,Estudiante,False
+ocupacion,7,Desempleado(a),False
+ocupacion,8,Jubilado(a) o pensionado(a),False
+ocupacion,9,Campesino(a) / Jornalero(a),False
+ocupacion,10,Comerciante,False
+ocupacion,96,Otro,False
+estado_civil,1,Soltero(a),False
+estado_civil,2,Casado(a),False
+estado_civil,3,Unión libre,False
+estado_civil,4,Viudo(a),False
+estado_civil,5,Divorciado(a) / Separado(a),False
+estado_civil,99,No respondió,False
+escolaridad,1,Sin instrucción,False
+escolaridad,3,Primaria incompleta,False
+escolaridad,4,Primaria completa,False
+escolaridad,5,Secundaria incompleta,False
+escolaridad,6,Secundaria completa,False
+escolaridad,7,Preparatoria incompleta,False
+escolaridad,8,Preparatoria completa,False
+escolaridad,9,Licenciatura incompleta,False
+escolaridad,10,Licenciatura completa,False
+escolaridad,11,Posgrado,False
+num_hijos,1,0,False
+num_hijos,2,1,False
+num_hijos,3,2 o más,False
+num_autos,1,0,False
+num_autos,2,1,False
+num_autos,3,2 o más,False
+tiene_internet,1,No tiene,False
+tiene_internet,2,Sí tiene,False
+num_cuartos,1,0,False
+num_cuartos,2,1,False
+num_cuartos,3,2,False
+num_cuartos,4,3,False
+num_cuartos,5,4 o más,False
+personas_hogar,1,0,False
+personas_hogar,2,1,False
+personas_hogar,3,2,False
+personas_hogar,4,3,False
+personas_hogar,5,4 o más,False
+domicilio_correcto,1,Dirección correcta,False
+domicilio_correcto,2,Dirección equivocada,False
+domicilio_correcto,98,No sabe,False
+domicilio_correcto,99,No respondió,False
+problema_principal_municipio,1,Inseguridad,False
+problema_principal_municipio,2,Bajos salarios,False
+problema_principal_municipio,3,Calles en mal estado,False
+problema_principal_municipio,4,Calles sin pavimento (terracería),False
+problema_principal_municipio,5,Corrupción,False
+problema_principal_municipio,6,Desabasto de medicamentos,False
+problema_principal_municipio,7,Economía,False
+problema_principal_municipio,8,Falta de agua potable,False
+problema_principal_municipio,9,Falta de alumbrado público,False
+problema_principal_municipio,10,Falta de apoyos al campo,False
+problema_principal_municipio,12,Falta de empleos,False
+problema_principal_municipio,14,Faltan más o mejores servicios de salud,False
+problema_principal_municipio,15,Faltan vías de comunicación (carreteras y caminos),False
+problema_principal_municipio,16,Mala calidad de la educación pública,False
+problema_principal_municipio,17,Mantenimiento y reparación del alumbrado público,False
+problema_principal_municipio,19,Narcotráfico,False
+problema_principal_municipio,20,Pobreza,False
+problema_principal_municipio,21,Recolección de basura,False
+problema_principal_municipio,96,Otra,False
+problema_principal_municipio,98,No sabe,False
+problema_principal_municipio,99,No respondió,False
+inseguridad_tipo,1,Asaltos en vía pública y transporte,False
+inseguridad_tipo,2,Desaparición de personas,False
+inseguridad_tipo,3,Extorsiones o amenazas,False
+inseguridad_tipo,4,Feminicidios,False
+inseguridad_tipo,5,Homicidios,False
+inseguridad_tipo,6,Narcotráfico,False
+inseguridad_tipo,7,Robo a casa habitación,False
+inseguridad_tipo,8,Robo de vehículos,False
+inseguridad_tipo,9,Secuestros,False
+inseguridad_tipo,10,Delincuencia organizada / Pandillas,False
+inseguridad_tipo,11,Violencia,False
+inseguridad_tipo,96,Otra,False
+inseguridad_tipo,98,No sabe,False
+servicio_publico_mejorar,1,Alumbrado público,False
+servicio_publico_mejorar,2,Bibliotecas y centros culturales,False
+servicio_publico_mejorar,3,Calles en mal estado / Baches,False
+servicio_publico_mejorar,4,Centros deportivos,False
+servicio_publico_mejorar,5,Drenaje y alcantarillado,False
+servicio_publico_mejorar,6,Escuelas y servicios educativos,False
+servicio_publico_mejorar,7,Mercados y centrales de abasto,False
+servicio_publico_mejorar,9,Recolección de basura,False
+servicio_publico_mejorar,10,Seguridad / Vigilancia policial,False
+servicio_publico_mejorar,11,Servicio de agua potable,False
+servicio_publico_mejorar,12,Transporte público / Movilidad,False
+servicio_publico_mejorar,96,Otra,False
+servicio_publico_mejorar,98,No sabe,False
+servicio_publico_mejorar,99,No respondió,False
+identificacion_partidaria,1,PAN,False
+identificacion_partidaria,2,PRI,False
+identificacion_partidaria,3,PT,False
+identificacion_partidaria,4,PVEM,False
+identificacion_partidaria,5,MC,False
+identificacion_partidaria,6,Morena,False
+identificacion_partidaria,8,Nueva Alianza,False
+identificacion_partidaria,9,Fuerza por México,False
+identificacion_partidaria,10,PSI,False
+identificacion_partidaria,97,Ninguno,False
+identificacion_partidaria,98,No sabe,False
+identificacion_partidaria,99,No respondió,False
+intencion_voto_partido,1,PAN,False
+intencion_voto_partido,2,PRI,False
+intencion_voto_partido,3,PT,False
+intencion_voto_partido,4,PVEM,False
+intencion_voto_partido,5,MC,False
+intencion_voto_partido,6,Morena,False
+intencion_voto_partido,8,Nueva Alianza,False
+intencion_voto_partido,9,Fuerza por México,False
+intencion_voto_partido,10,PSI,False
+intencion_voto_partido,97,Ninguno,False
+intencion_voto_partido,98,No sabe,False
+intencion_voto_partido,99,No respondió,False
+_escala_conoce,1,Sí,True
+_escala_conoce,2,No,True
+_escala_conoce,99,No respondió,True
+_escala_eval,1,Buena,True
+_escala_eval,2,Regular,True
+_escala_eval,3,Mala,True
+_escala_eval,98,No sabe,True
+_escala_eval,99,No respondió,True
+_escala_atributo,1,Mucho,True
+_escala_atributo,2,Algo,True
+_escala_atributo,3,Poco,True
+_escala_atributo,4,Nada,True
+_escala_atributo,98,No sabe,True
+_escala_atributo,99,No respondió,True
+_escala_intencion,1,Sí,True
+_escala_intencion,2,No,True
+_escala_intencion,98,No sabe,True
+_escala_intencion,99,No respondió,True
+_escala_voto_duro,1,Votaría,True
+_escala_voto_duro,2,Nunca votaría,True
+_escala_voto_duro,98,No sabe,True
+_escala_voto_duro,99,No respondió,True
+careo_hombres_1er,1,Juan Carlos Lastiri Yamal,False
+careo_hombres_1er,2,Luis Márquez Lecona,False
+careo_hombres_1er,3,Jorge Luis Coriche Avilés,False
+careo_hombres_1er,4,Asdruval Drake Hurtado,False
+careo_hombres_1er,5,Eybar Márquez Manzano,False
+careo_hombres_1er,97,Ninguno,False
+careo_hombres_1er,98,No sabe,False
+careo_hombres_1er,99,No respondió,False
+careo_hombres_2do,1,Juan Carlos Lastiri Yamal,False
+careo_hombres_2do,2,Luis Márquez Lecona,False
+careo_hombres_2do,3,Jorge Luis Coriche Avilés,False
+careo_hombres_2do,4,Asdruval Drake Hurtado,False
+careo_hombres_2do,5,Eybar Márquez Manzano,False
+careo_hombres_2do,97,Ninguno,False
+careo_hombres_2do,98,No sabe,False
+careo_hombres_2do,99,No respondió,False
+careo_mujeres_1ra,1,Beatriz Sánchez Galindo,False
+careo_mujeres_1ra,2,Lourdes Martínez García,False
+careo_mujeres_1ra,97,Ninguno,False
+careo_mujeres_1ra,98,No sabe,False
+careo_mujeres_1ra,99,No respondió,False
+careo_mujeres_2da,1,Beatriz Sánchez Galindo,False
+careo_mujeres_2da,2,Lourdes Martínez García,False
+careo_mujeres_2da,97,Ninguno,False
+careo_mujeres_2da,98,No sabe,False
+careo_mujeres_2da,99,No respondió,False
+preferencia_candidato_morena_1ro,1,Beatriz Sánchez Galindo,False
+preferencia_candidato_morena_1ro,2,Lourdes Martínez García,False
+preferencia_candidato_morena_1ro,3,Juan Carlos Lastiri Yamal,False
+preferencia_candidato_morena_1ro,4,Luis Márquez Lecona,False
+preferencia_candidato_morena_1ro,5,Jorge Luis Coriche Avilés,False
+preferencia_candidato_morena_1ro,6,Asdruval Drake Hurtado,False
+preferencia_candidato_morena_1ro,7,Eybar Márquez Manzano,False
+preferencia_candidato_morena_1ro,97,Ninguno,False
+preferencia_candidato_morena_1ro,98,No sabe,False
+preferencia_candidato_morena_1ro,99,No respondió,False
+preferencia_candidato_morena_2do,1,Beatriz Sánchez Galindo,False
+preferencia_candidato_morena_2do,2,Lourdes Martínez García,False
+preferencia_candidato_morena_2do,3,Juan Carlos Lastiri Yamal,False
+preferencia_candidato_morena_2do,4,Luis Márquez Lecona,False
+preferencia_candidato_morena_2do,5,Jorge Luis Coriche Avilés,False
+preferencia_candidato_morena_2do,6,Asdruval Drake Hurtado,False
+preferencia_candidato_morena_2do,7,Eybar Márquez Manzano,False
+preferencia_candidato_morena_2do,97,Ninguno,False
+preferencia_candidato_morena_2do,98,No sabe,False
+preferencia_candidato_morena_2do,99,No respondió,False
+careo_sin_lastiri,1,Alberto Amador González (PAN),False
+careo_sin_lastiri,2,Javier del Valle Hernández (PRI),False
+careo_sin_lastiri,3,Eybar Márquez Manzano (PT),False
+careo_sin_lastiri,4,Asdruval Drake Hurtado (PVEM),False
+careo_sin_lastiri,5,Mariana Sánchez Islas (MC),False
+careo_sin_lastiri,6,Beatriz Sánchez Galindo (Morena),False
+careo_sin_lastiri,7,Eloísa Barrios Rodríguez (PSI),False
+careo_sin_lastiri,97,Ninguno,False
+careo_sin_lastiri,98,No sabe,False
+careo_sin_lastiri,99,No respondió,False
+careo_con_lastiri,1,Alberto Amador González (PAN),False
+careo_con_lastiri,2,Javier del Valle Hernández (PRI),False
+careo_con_lastiri,3,Eybar Márquez Manzano (PT),False
+careo_con_lastiri,4,Asdruval Drake Hurtado (PVEM),False
+careo_con_lastiri,5,Mariana Sánchez Islas (MC),False
+careo_con_lastiri,6,Juan Carlos Lastiri Yamal (Morena),False
+careo_con_lastiri,7,Eloísa Barrios Rodríguez (PSI),False
+careo_con_lastiri,97,Ninguno,False
+careo_con_lastiri,98,No sabe,False
+careo_con_lastiri,99,No respondió,False
+_escala_aprobacion,1,Aprueba mucho,True
+_escala_aprobacion,2,Aprueba,True
+_escala_aprobacion,3,Desaprueba,True
+_escala_aprobacion,4,Desaprueba mucho,True
+_escala_aprobacion,99,No sabe / No respondió,True
+_escala_recuerdo,1,Sí,True
+_escala_recuerdo,2,No,True
+_escala_recuerdo,98,No recuerda,True
+_escala_recuerdo,99,No responde,True
+recibe_programas_sociales,1,Sí,False
+recibe_programas_sociales,2,No,False
+recibe_programas_sociales,98,No sabe,False
+recibe_programas_sociales,99,No respondió,False
+confianza_ayuntamiento,1,Mucho,False
+confianza_ayuntamiento,2,Algo,False
+confianza_ayuntamiento,3,Poco,False
+confianza_ayuntamiento,4,Nada,False
+confianza_ayuntamiento,98,No sabe,False
+confianza_ayuntamiento,99,No respondió,False
+economia_familiar,1,Mejoró,False
+economia_familiar,2,Se mantuvo igual,False
+economia_familiar,3,Empeoró,False
+economia_familiar,98,No sabe,False
+economia_familiar,99,No respondió,False
+beneficio_comunitario_turismo,1,Beneficia,False
+beneficio_comunitario_turismo,2,Perjudica,False
+beneficio_comunitario_turismo,3,Ni perjudica ni beneficia,False
+beneficio_comunitario_turismo,98,No sabe,False
+beneficio_comunitario_turismo,99,No respondió,False
+beneficio_individual_turismo,1,Mucho,False
+beneficio_individual_turismo,2,Algo,False
+beneficio_individual_turismo,3,Poco,False
+beneficio_individual_turismo,4,Nada,False
+beneficio_individual_turismo,98,No sabe,False
+beneficio_individual_turismo,99,No respondió,False
+frecuencia_servicio_agua,1,Diario,False
+frecuencia_servicio_agua,2,Cada tercer día,False
+frecuencia_servicio_agua,3,Dos veces por semana,False
+frecuencia_servicio_agua,4,Una vez por semana,False
+frecuencia_servicio_agua,5,De vez en cuando,False
+frecuencia_servicio_agua,98,No sabe,False
+frecuencia_servicio_agua,99,No respondió,False
+origen_agua,1,Servicio público de agua,False
+origen_agua,2,Pozo comunitario,False
+origen_agua,3,Pozo particular / Una pipa,False
+origen_agua,5,Otra vivienda,False
+origen_agua,98,No sabe,False
+origen_agua,99,No respondió,False

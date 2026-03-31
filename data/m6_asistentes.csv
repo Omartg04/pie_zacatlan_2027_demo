@@ -1,0 +1,501 @@
+﻿id_reunion_text,seccion_electoral_text,nombre_asistente_text,celular_asistente_number,direccion_asistente_text,redes_asistente_text,quiere_ser_anfitrion_boolean,fecha_proxima_reunion_date
+REU-2461-001,2461,Rocío Espinosa,7331191390,"Calle Juárez #27, Altica",,False,
+REU-2461-001,2461,Celia Benítez,7469319644,"Calle Zaragoza #68, Altica",@celia68,True,2026-03-09
+REU-2461-001,2461,Estela Cabrera,7506448196,"Calle Hidalgo #142, Altica",,False,
+REU-2461-001,2461,Pilar Navarro,7488302652,"Calle Zaragoza #50, Altica",@pilar15,False,
+REU-2461-001,2461,Amparo Zúñiga,7930075810,"Calle Juárez #21, Altica",@amparo22,False,
+REU-2461-001,2461,Ángel Contreras,7586845604,"Calle Juárez #42, Altica",,False,
+REU-2461-001,2461,Laura Méndez,7853573823,"Calle Hidalgo #156, Altica",@laura78,True,2026-02-28
+REU-2461-001,2461,Beatriz Salinas,7275452091,"Calle 16 de Sep #98, Altica",,False,
+REU-2461-001,2461,Mauricio Téllez,7838908273,"Calle Zaragoza #57, Altica",@mauricio17,False,
+REU-2461-001,2461,Diana Quintero,7964411347,"Calle Juárez #103, Altica",,True,2026-02-24
+REU-2461-002,2461,Diana Quintero,7602564736,"Calle Zaragoza #65, Colonia Poniente",@diana11,False,
+REU-2461-002,2461,Ramón Ibáñez,7222998994,"Calle Zaragoza #193, Colonia Poniente",,False,
+REU-2461-002,2461,Felipe Mora,7219778234,"Calle Juárez #112, Colonia Poniente",,False,
+REU-2461-002,2461,Eduardo Castillo,7872751234,"Calle Juárez #129, Colonia Poniente",@eduardo74,True,2026-04-05
+REU-2461-002,2461,Ricardo Peña,7771410971,"Calle Juárez #164, Colonia Poniente",@ricardo35,False,
+REU-2461-002,2461,Tomás Guzmán,7273461957,"Calle Zaragoza #200, Colonia Poniente",@tomás10,True,2026-04-06
+REU-2461-002,2461,Beatriz Salinas,7624636385,"Calle Hidalgo #29, Colonia Poniente",@beatriz49,False,
+REU-2461-002,2461,Mauricio Téllez,7709194872,"Calle Hidalgo #22, Colonia Poniente",@mauricio18,True,2026-03-28
+REU-2461-002,2461,Martha Herrera,7671988889,"Calle Morelos #33, Colonia Poniente",@martha80,False,
+REU-2461-002,2461,Rocío Espinosa,7751325257,"Calle 16 de Sep #55, Colonia Poniente",@rocío98,True,2026-04-02
+REU-2463-001,2463,Eduardo Castillo,7330035022,"Calle Zaragoza #34, La Ciénega",@eduardo83,False,
+REU-2463-001,2463,Pilar Navarro,7360916298,"Calle 16 de Sep #105, La Ciénega",,False,
+REU-2463-001,2463,Martha Herrera,7480424119,"Calle 16 de Sep #106, La Ciénega",@martha16,True,2026-03-14
+REU-2463-001,2463,Sandra Torres,7793830224,"Calle Hidalgo #16, La Ciénega",@sandra53,False,
+REU-2463-001,2463,Rubén Palomino,7217326729,"Calle Morelos #50, La Ciénega",,False,
+REU-2463-001,2463,Benjamín Acosta,7552991960,"Calle Morelos #72, La Ciénega",@benjamín19,False,
+REU-2463-001,2463,Diana Quintero,7690907304,"Calle Hidalgo #13, La Ciénega",@diana79,False,
+REU-2463-001,2463,Enrique Fuentes,7200140141,"Calle Morelos #43, La Ciénega",@enrique71,False,
+REU-2463-001,2463,Ángel Contreras,7162959284,"Calle Morelos #98, La Ciénega",,True,2026-03-14
+REU-2465-001,2465,Arturo Figueroa,7711684318,"Calle Morelos #149, La Loma",@arturo89,True,2026-03-19
+REU-2465-001,2465,Beatriz Salinas,7726713347,"Calle Zaragoza #134, La Loma",,True,2026-03-15
+REU-2465-001,2465,Eduardo Castillo,7819112790,"Calle Juárez #62, La Loma",,False,
+REU-2465-001,2465,Diana Quintero,7422119408,"Calle 16 de Sep #81, La Loma",@diana19,True,2026-03-15
+REU-2465-001,2465,Felipe Mora,7704509817,"Calle Hidalgo #19, La Loma",@felipe74,True,2026-03-14
+REU-2465-001,2465,David Rueda,7474745382,"Calle Hidalgo #63, La Loma",,False,
+REU-2465-001,2465,Martha Herrera,7683275843,"Calle Juárez #157, La Loma",@martha93,True,2026-03-18
+REU-2465-001,2465,Rodrigo Ceballos,7817112652,"Calle Zaragoza #77, La Loma",@rodrigo23,False,
+REU-2465-001,2465,Enrique Fuentes,7244193987,"Calle Juárez #30, La Loma",@enrique80,False,
+REU-2465-001,2465,Rocío Espinosa,7749431082,"Calle Morelos #184, La Loma",,True,2026-03-09
+REU-2465-002,2465,Celia Benítez,7954829815,"Calle Hidalgo #92, La Loma",,False,
+REU-2465-002,2465,Sandra Torres,7479759538,"Calle Zaragoza #105, La Loma",@sandra29,True,2026-03-06
+REU-2465-002,2465,Armando Ochoa,7354194771,"Calle Morelos #46, La Loma",@armando13,False,
+REU-2465-002,2465,Oswaldo Rangel,7456681425,"Calle 16 de Sep #172, La Loma",@oswaldo41,True,2026-03-19
+REU-2465-002,2465,Tomás Guzmán,7945436943,"Calle Hidalgo #98, La Loma",@tomás70,False,
+REU-2465-002,2465,Mauricio Téllez,7594246837,"Calle Juárez #79, La Loma",@mauricio39,True,2026-03-18
+REU-2465-002,2465,Alicia Vega,7307371533,"Calle 16 de Sep #85, La Loma",,True,2026-03-15
+REU-2465-002,2465,Lourdes Bermúdez,7399708182,"Calle Juárez #165, La Loma",@lourdes96,True,2026-03-17
+REU-2467-001,2467,Sandra Torres,7454549587,"Calle Zaragoza #81, Linda Vista",@sandra25,True,2026-02-28
+REU-2467-001,2467,Mauricio Téllez,7422468580,"Calle Zaragoza #80, Linda Vista",@mauricio51,False,
+REU-2467-001,2467,Laura Méndez,7417457352,"Calle Zaragoza #33, Linda Vista",,False,
+REU-2467-001,2467,Arturo Figueroa,7507104143,"Calle Morelos #158, Linda Vista",@arturo61,False,
+REU-2467-001,2467,Celia Benítez,7100435874,"Calle Juárez #74, Linda Vista",,False,
+REU-2467-001,2467,Rocío Espinosa,7751397897,"Calle Juárez #120, Linda Vista",@rocío96,False,
+REU-2467-001,2467,Armando Ochoa,7952266893,"Calle Morelos #169, Linda Vista",,True,2026-02-25
+REU-2467-001,2467,Lourdes Bermúdez,7779615069,"Calle Zaragoza #86, Linda Vista",,False,
+REU-2467-002,2467,Norma Jiménez,7960514523,"Calle 16 de Sep #171, Sagrado Corazón",@norma81,False,
+REU-2467-002,2467,Mauricio Téllez,7910943524,"Calle 16 de Sep #157, Sagrado Corazón",@mauricio74,False,
+REU-2467-002,2467,Pilar Navarro,7688273030,"Calle 16 de Sep #41, Sagrado Corazón",@pilar70,False,
+REU-2467-002,2467,David Rueda,7907214179,"Calle Morelos #164, Sagrado Corazón",,False,
+REU-2467-002,2467,Arturo Figueroa,7620332086,"Calle Morelos #71, Sagrado Corazón",@arturo46,False,
+REU-2467-002,2467,Nicolás Ponce,7443285529,"Calle Zaragoza #21, Sagrado Corazón",,True,2026-03-06
+REU-2467-002,2467,Eduardo Castillo,7264073400,"Calle Morelos #17, Sagrado Corazón",@eduardo52,True,2026-03-12
+REU-2467-002,2467,Enrique Fuentes,7546434187,"Calle Hidalgo #53, Sagrado Corazón",@enrique59,False,
+REU-2467-002,2467,Ricardo Peña,7727150493,"Calle Hidalgo #196, Sagrado Corazón",@ricardo71,False,
+REU-2467-003,2467,Nicolás Ponce,7507059676,"Calle Juárez #55, Nogal",@nicolás53,True,2026-03-15
+REU-2467-003,2467,Alicia Vega,7507083673,"Calle Juárez #193, Nogal",@alicia63,False,
+REU-2467-003,2467,Celia Benítez,7187946147,"Calle 16 de Sep #5, Nogal",@celia16,False,
+REU-2467-003,2467,Pablo Ríos,7475767056,"Calle Morelos #167, Nogal",,False,
+REU-2467-003,2467,Gerardo Montes,7143226844,"Calle Hidalgo #64, Nogal",,False,
+REU-2467-003,2467,Hortensia Méndez,7356135680,"Calle Morelos #122, Nogal",@hortensia82,True,2026-03-13
+REU-2467-003,2467,Felipe Mora,7599326438,"Calle Juárez #197, Nogal",,False,
+REU-2467-003,2467,Mauricio Téllez,7903079055,"Calle Hidalgo #200, Nogal",@mauricio49,False,
+REU-2467-003,2467,Lourdes Bermúdez,7434961542,"Calle Zaragoza #174, Nogal",@lourdes58,True,2026-03-11
+REU-2467-003,2467,Diana Quintero,7867741192,"Calle Morelos #20, Nogal",@diana90,False,
+REU-2467-003,2467,Pilar Navarro,7929445037,"Calle Juárez #176, Nogal",@pilar25,True,2026-03-22
+REU-2467-004,2467,Rodrigo Ceballos,7193053577,"Calle Juárez #116, Linda Vista",,False,
+REU-2467-004,2467,Celia Benítez,7755338677,"Calle 16 de Sep #87, Linda Vista",,False,
+REU-2467-004,2467,Leticia Sandoval,7295249057,"Calle 16 de Sep #55, Linda Vista",,False,
+REU-2467-004,2467,Nicolás Ponce,7400281010,"Calle Zaragoza #180, Linda Vista",@nicolás81,False,
+REU-2467-004,2467,Mauricio Téllez,7191926217,"Calle Morelos #185, Linda Vista",@mauricio81,True,2026-03-14
+REU-2467-004,2467,Ángel Contreras,7841536135,"Calle 16 de Sep #166, Linda Vista",@ángel67,False,
+REU-2467-004,2467,Sofía Aguilera,7199915275,"Calle Juárez #57, Linda Vista",@sofía41,False,
+REU-2467-004,2467,Enrique Fuentes,7724440558,"Calle Juárez #122, Linda Vista",@enrique54,False,
+REU-2470-001,2470,Arturo Figueroa,7394539550,"Calle Hidalgo #14, Centro",@arturo99,False,
+REU-2470-001,2470,Lourdes Bermúdez,7784907325,"Calle 16 de Sep #27, Centro",@lourdes83,False,
+REU-2470-001,2470,Margarita Reyes,7614015466,"Calle 16 de Sep #88, Centro",,False,
+REU-2470-001,2470,Norma Jiménez,7612957813,"Calle Hidalgo #17, Centro",@norma19,True,2026-04-06
+REU-2470-001,2470,Rocío Espinosa,7837071174,"Calle Hidalgo #39, Centro",,False,
+REU-2470-001,2470,Benjamín Acosta,7426240903,"Calle Hidalgo #64, Centro",,False,
+REU-2470-001,2470,Pilar Navarro,7751028618,"Calle Zaragoza #159, Centro",,False,
+REU-2470-001,2470,Armando Ochoa,7583736219,"Calle 16 de Sep #77, Centro",@armando64,False,
+REU-2470-001,2470,David Rueda,7766823010,"Calle Hidalgo #157, Centro",@david22,False,
+REU-2470-001,2470,Tomás Guzmán,7323110563,"Calle Morelos #68, Centro",@tomás30,False,
+REU-2470-001,2470,Laura Méndez,7180600295,"Calle Morelos #1, Centro",@laura98,True,2026-04-01
+REU-2470-001,2470,Isabel Guerrero,7412737284,"Calle Hidalgo #60, Centro",,False,
+REU-2470-002,2470,Hortensia Méndez,7563887247,"Calle Juárez #155, Camotepec",,False,
+REU-2470-002,2470,Margarita Reyes,7997603725,"Calle Zaragoza #151, Camotepec",@margarita96,True,2026-03-28
+REU-2470-002,2470,Amparo Zúñiga,7718740490,"Calle Hidalgo #196, Camotepec",@amparo70,False,
+REU-2470-002,2470,Ricardo Peña,7574840200,"Calle Juárez #47, Camotepec",@ricardo65,False,
+REU-2470-002,2470,Nicolás Ponce,7627986559,"Calle Hidalgo #121, Camotepec",,False,
+REU-2470-002,2470,Víctor Lara,7819550381,"Calle Hidalgo #42, Camotepec",,False,
+REU-2470-002,2470,Gerardo Montes,7409471503,"Calle 16 de Sep #195, Camotepec",@gerardo68,False,
+REU-2470-002,2470,Ángel Contreras,7447112584,"Calle Hidalgo #198, Camotepec",@ángel75,True,2026-03-22
+REU-2470-002,2470,Ramón Ibáñez,7101235946,"Calle Zaragoza #119, Camotepec",@ramón34,False,
+REU-2470-002,2470,Pilar Navarro,7768548027,"Calle 16 de Sep #161, Camotepec",@pilar16,False,
+REU-2470-002,2470,Sandra Torres,7240674381,"Calle Juárez #113, Camotepec",@sandra72,True,2026-03-26
+REU-2471-001,2471,Leticia Sandoval,7464938258,"Calle Zaragoza #69, Tuliman",@leticia46,False,
+REU-2471-001,2471,Enrique Fuentes,7999232921,"Calle Zaragoza #149, Tuliman",@enrique72,False,
+REU-2471-001,2471,Nicolás Ponce,7579476614,"Calle Zaragoza #124, Tuliman",,False,
+REU-2471-001,2471,Oswaldo Rangel,7683503591,"Calle 16 de Sep #117, Tuliman",@oswaldo34,False,
+REU-2471-001,2471,Tomás Guzmán,7356415500,"Calle Zaragoza #99, Tuliman",,False,
+REU-2471-001,2471,Fernanda Díaz,7146865930,"Calle Juárez #191, Tuliman",@fernanda58,False,
+REU-2471-001,2471,Rocío Espinosa,7812630453,"Calle Morelos #127, Tuliman",@rocío26,False,
+REU-2471-001,2471,Diana Quintero,7733701411,"Calle Juárez #26, Tuliman",@diana66,False,
+REU-2471-001,2471,Alicia Vega,7590622789,"Calle Hidalgo #185, Tuliman",,True,2026-03-04
+REU-2471-001,2471,Mauricio Téllez,7265744099,"Calle Hidalgo #121, Tuliman",@mauricio43,False,
+REU-2471-001,2471,Sandra Torres,7843785903,"Calle 16 de Sep #167, Tuliman",,False,
+REU-2471-001,2471,Ramón Ibáñez,7824085842,"Calle Zaragoza #98, Tuliman",@ramón90,False,
+REU-2471-001,2471,Celia Benítez,7915401487,"Calle 16 de Sep #139, Tuliman",,False,
+REU-2471-001,2471,Gerardo Montes,7834868441,"Calle Juárez #59, Tuliman",@gerardo65,True,2026-02-28
+REU-2471-002,2471,Beatriz Salinas,7372706093,"Calle 16 de Sep #66, Tepeixco",@beatriz69,False,
+REU-2471-002,2471,David Rueda,7827579147,"Calle Zaragoza #41, Tepeixco",,False,
+REU-2471-002,2471,Felipe Mora,7730900313,"Calle Juárez #164, Tepeixco",@felipe98,False,
+REU-2471-002,2471,Fernanda Díaz,7424400672,"Calle Morelos #99, Tepeixco",@fernanda23,False,
+REU-2471-002,2471,Enrique Fuentes,7485429460,"Calle Zaragoza #76, Tepeixco",@enrique47,True,2026-03-26
+REU-2471-002,2471,Ramón Ibáñez,7806768884,"Calle 16 de Sep #71, Tepeixco",,True,2026-03-30
+REU-2471-002,2471,Tomás Guzmán,7935705734,"Calle Hidalgo #156, Tepeixco",@tomás46,False,
+REU-2471-002,2471,Pilar Navarro,7347087743,"Calle Zaragoza #91, Tepeixco",,False,
+REU-2471-003,2471,Celia Benítez,7602866993,"Calle Hidalgo #37, Centro",@celia38,False,
+REU-2471-003,2471,Armando Ochoa,7877621770,"Calle 16 de Sep #143, Centro",,False,
+REU-2471-003,2471,Arturo Figueroa,7114945047,"Calle Juárez #138, Centro",,False,
+REU-2471-003,2471,Diana Quintero,7904245086,"Calle Juárez #150, Centro",,False,
+REU-2471-003,2471,Ángel Contreras,7498866784,"Calle Hidalgo #173, Centro",,False,
+REU-2471-003,2471,Beatriz Salinas,7702806585,"Calle Juárez #157, Centro",,True,2026-03-19
+REU-2471-003,2471,Dolores Arias,7598503464,"Calle Juárez #167, Centro",@dolores27,True,2026-03-18
+REU-2471-003,2471,Leticia Sandoval,7426808977,"Calle 16 de Sep #30, Centro",,True,2026-03-05
+REU-2471-003,2471,Margarita Reyes,7245668163,"Calle 16 de Sep #117, Centro",,False,
+REU-2471-003,2471,Lourdes Bermúdez,7847843987,"Calle Zaragoza #108, Centro",@lourdes29,False,
+REU-2471-003,2471,Mauricio Téllez,7803217037,"Calle Hidalgo #126, Centro",@mauricio45,False,
+REU-2471-003,2471,Rodrigo Ceballos,7333291547,"Calle 16 de Sep #114, Centro",@rodrigo56,True,2026-03-10
+REU-2471-004,2471,Oswaldo Rangel,7255357534,"Calle Morelos #139, Cruztitla",,False,
+REU-2471-004,2471,Ignacio Valdez,7127681228,"Calle Morelos #4, Cruztitla",,True,2026-03-22
+REU-2471-004,2471,Benjamín Acosta,7732276010,"Calle Juárez #5, Cruztitla",,False,
+REU-2471-004,2471,Lourdes Bermúdez,7552002959,"Calle Zaragoza #30, Cruztitla",@lourdes70,True,2026-03-23
+REU-2471-004,2471,Pilar Navarro,7488736388,"Calle Zaragoza #152, Cruztitla",,False,
+REU-2471-004,2471,Rubén Palomino,7760465943,"Calle Hidalgo #187, Cruztitla",@rubén94,False,
+REU-2471-004,2471,Tomás Guzmán,7591819409,"Calle Hidalgo #16, Cruztitla",@tomás61,False,
+REU-2471-004,2471,Laura Méndez,7215923129,"Calle 16 de Sep #183, Cruztitla",@laura19,False,
+REU-2471-004,2471,Ángel Contreras,7445864933,"Calle Zaragoza #38, Cruztitla",,False,
+REU-2473-001,2473,Sofía Aguilera,7200105056,"Calle 16 de Sep #25, Xoxonacatla",@sofía57,False,
+REU-2473-001,2473,Mauricio Téllez,7697398528,"Calle Hidalgo #151, Xoxonacatla",@mauricio81,False,
+REU-2473-001,2473,Rodrigo Ceballos,7231244840,"Calle 16 de Sep #91, Xoxonacatla",@rodrigo64,False,
+REU-2473-001,2473,Dolores Arias,7874233009,"Calle Hidalgo #74, Xoxonacatla",@dolores55,False,
+REU-2473-001,2473,Armando Ochoa,7328426553,"Calle Morelos #169, Xoxonacatla",@armando23,True,2026-04-05
+REU-2473-001,2473,Tomás Guzmán,7697285504,"Calle Juárez #30, Xoxonacatla",@tomás83,False,
+REU-2473-001,2473,Leticia Sandoval,7702332331,"Calle Zaragoza #158, Xoxonacatla",@leticia81,True,2026-04-03
+REU-2473-001,2473,Martha Herrera,7806340901,"Calle Juárez #8, Xoxonacatla",,True,2026-04-11
+REU-2473-001,2473,Felipe Mora,7431769776,"Calle Juárez #90, Xoxonacatla",,False,
+REU-2473-002,2473,Rodrigo Ceballos,7219066986,"Calle Juárez #174, Jilotzingo",@rodrigo72,False,
+REU-2473-002,2473,Eduardo Castillo,7431162800,"Calle Hidalgo #57, Jilotzingo",,False,
+REU-2473-002,2473,Felipe Mora,7108253947,"Calle Morelos #78, Jilotzingo",@felipe27,False,
+REU-2473-002,2473,Ángel Contreras,7410791488,"Calle Juárez #31, Jilotzingo",,False,
+REU-2473-002,2473,Amparo Zúñiga,7288650860,"Calle Morelos #98, Jilotzingo",@amparo39,False,
+REU-2473-002,2473,Mauricio Téllez,7994807263,"Calle Juárez #19, Jilotzingo",,False,
+REU-2473-002,2473,Ramón Ibáñez,7568387228,"Calle Hidalgo #118, Jilotzingo",@ramón50,False,
+REU-2473-002,2473,Oswaldo Rangel,7715683222,"Calle 16 de Sep #182, Jilotzingo",@oswaldo47,False,
+REU-2473-002,2473,Estela Cabrera,7448717183,"Calle Morelos #159, Jilotzingo",@estela98,True,2026-02-21
+REU-2473-002,2473,Alicia Vega,7194628740,"Calle 16 de Sep #28, Jilotzingo",,False,
+REU-2473-002,2473,Norma Jiménez,7662600500,"Calle Hidalgo #102, Jilotzingo",@norma53,False,
+REU-2473-002,2473,Fernanda Díaz,7280531127,"Calle Hidalgo #131, Jilotzingo",@fernanda77,True,2026-03-05
+REU-2473-002,2473,Dolores Arias,7933468715,"Calle Juárez #90, Jilotzingo",@dolores92,False,
+REU-2473-002,2473,Lourdes Bermúdez,7353691745,"Calle Hidalgo #38, Jilotzingo",,False,
+REU-2473-003,2473,Nicolás Ponce,7144047803,"Calle 16 de Sep #147, Centro",@nicolás51,False,
+REU-2473-003,2473,Amparo Zúñiga,7638339044,"Calle Morelos #16, Centro",@amparo53,False,
+REU-2473-003,2473,Sandra Torres,7190547712,"Calle Zaragoza #166, Centro",,False,
+REU-2473-003,2473,Eduardo Castillo,7571825556,"Calle Zaragoza #134, Centro",@eduardo56,True,2026-03-05
+REU-2473-003,2473,Armando Ochoa,7403754671,"Calle 16 de Sep #105, Centro",@armando96,False,
+REU-2473-003,2473,Margarita Reyes,7947425963,"Calle Juárez #17, Centro",,False,
+REU-2473-003,2473,Martha Herrera,7515070154,"Calle Juárez #65, Centro",@martha94,False,
+REU-2473-003,2473,Felipe Mora,7747145068,"Calle Morelos #86, Centro",,False,
+REU-2473-003,2473,Fernanda Díaz,7475617211,"Calle Juárez #168, Centro",@fernanda60,False,
+REU-2473-003,2473,Pilar Navarro,7190966348,"Calle Juárez #144, Centro",,True,2026-03-09
+REU-2473-003,2473,Celia Benítez,7973150512,"Calle Morelos #172, Centro",@celia97,False,
+REU-2473-003,2473,Ángel Contreras,7200344359,"Calle 16 de Sep #131, Centro",,False,
+REU-2473-003,2473,Gerardo Montes,7293555835,"Calle Morelos #88, Centro",@gerardo72,False,
+REU-2473-004,2473,Amparo Zúñiga,7432288618,"Calle 16 de Sep #50, Xoxonacatla",,True,2026-02-28
+REU-2473-004,2473,Sandra Torres,7573087862,"Calle 16 de Sep #197, Xoxonacatla",,False,
+REU-2473-004,2473,Estela Cabrera,7666355637,"Calle 16 de Sep #42, Xoxonacatla",@estela87,False,
+REU-2473-004,2473,Armando Ochoa,7156027635,"Calle 16 de Sep #96, Xoxonacatla",@armando23,True,2026-03-01
+REU-2473-004,2473,Enrique Fuentes,7653953485,"Calle Hidalgo #73, Xoxonacatla",,False,
+REU-2473-004,2473,Rodrigo Ceballos,7651208305,"Calle Morelos #112, Xoxonacatla",,True,2026-03-04
+REU-2473-004,2473,Margarita Reyes,7976928440,"Calle 16 de Sep #90, Xoxonacatla",@margarita63,False,
+REU-2473-004,2473,Celia Benítez,7501538092,"Calle Morelos #99, Xoxonacatla",@celia57,True,2026-03-05
+REU-2478-001,2478,Tomás Guzmán,7952442674,"Calle Zaragoza #118, Poxcuatzingo",,True,2026-02-28
+REU-2478-001,2478,Oswaldo Rangel,7636687537,"Calle Zaragoza #138, Poxcuatzingo",,False,
+REU-2478-001,2478,Arturo Figueroa,7359779090,"Calle Morelos #75, Poxcuatzingo",@arturo88,False,
+REU-2478-001,2478,Mauricio Téllez,7712745501,"Calle 16 de Sep #48, Poxcuatzingo",@mauricio20,False,
+REU-2478-001,2478,Ricardo Peña,7487195336,"Calle Hidalgo #135, Poxcuatzingo",@ricardo74,False,
+REU-2478-001,2478,Margarita Reyes,7519246503,"Calle 16 de Sep #12, Poxcuatzingo",@margarita57,False,
+REU-2478-001,2478,Enrique Fuentes,7117439966,"Calle Juárez #18, Poxcuatzingo",,False,
+REU-2478-001,2478,Víctor Lara,7774585778,"Calle Hidalgo #198, Poxcuatzingo",@víctor52,False,
+REU-2478-001,2478,Lourdes Bermúdez,7686277792,"Calle Juárez #165, Poxcuatzingo",,True,2026-02-23
+REU-2478-001,2478,Pablo Ríos,7598885034,"Calle 16 de Sep #162, Poxcuatzingo",,False,
+REU-2480-001,2480,Eduardo Castillo,7634211672,"Calle Juárez #133, La Joya",,False,
+REU-2480-001,2480,Rubén Palomino,7184747224,"Calle 16 de Sep #155, La Joya",@rubén33,True,2026-02-27
+REU-2480-001,2480,Ángel Contreras,7444898148,"Calle Hidalgo #21, La Joya",,False,
+REU-2480-001,2480,Ricardo Peña,7578798403,"Calle Zaragoza #184, La Joya",@ricardo98,False,
+REU-2480-001,2480,Armando Ochoa,7580101819,"Calle Hidalgo #187, La Joya",@armando55,False,
+REU-2480-001,2480,Mauricio Téllez,7567013808,"Calle Juárez #164, La Joya",@mauricio17,False,
+REU-2480-001,2480,Gerardo Montes,7536164913,"Calle Juárez #132, La Joya",@gerardo96,True,2026-03-03
+REU-2480-001,2480,Amparo Zúñiga,7253308283,"Calle Zaragoza #174, La Joya",@amparo14,True,2026-02-21
+REU-2480-001,2480,Fernanda Díaz,7935924516,"Calle Juárez #93, La Joya",,True,2026-02-24
+REU-2480-001,2480,Beatriz Salinas,7749715626,"Calle Morelos #174, La Joya",@beatriz57,False,
+REU-2480-001,2480,Felipe Mora,7919355714,"Calle Hidalgo #147, La Joya",,False,
+REU-2481-001,2481,Ramón Ibáñez,7970281936,"Calle Juárez #171, Cuautilulco Ejido",,False,
+REU-2481-001,2481,Rocío Espinosa,7411774120,"Calle Juárez #41, Cuautilulco Ejido",@rocío99,True,2026-03-22
+REU-2481-001,2481,Ricardo Peña,7952225000,"Calle Juárez #131, Cuautilulco Ejido",,False,
+REU-2481-001,2481,Alicia Vega,7950474042,"Calle Morelos #61, Cuautilulco Ejido",@alicia13,False,
+REU-2481-001,2481,Martha Herrera,7714478186,"Calle Juárez #120, Cuautilulco Ejido",@martha80,False,
+REU-2481-001,2481,Amparo Zúñiga,7192573170,"Calle Hidalgo #80, Cuautilulco Ejido",,True,2026-03-28
+REU-2481-001,2481,David Rueda,7613962746,"Calle Zaragoza #106, Cuautilulco Ejido",@david83,False,
+REU-2481-001,2481,Celia Benítez,7789705810,"Calle Hidalgo #116, Cuautilulco Ejido",@celia76,True,2026-03-19
+REU-2481-002,2481,Ángel Contreras,7749762955,"Calle Juárez #145, Cuautilulco Barrio",,False,
+REU-2481-002,2481,Alicia Vega,7187212377,"Calle Hidalgo #165, Cuautilulco Barrio",@alicia43,False,
+REU-2481-002,2481,Víctor Lara,7923515952,"Calle Zaragoza #107, Cuautilulco Barrio",@víctor13,False,
+REU-2481-002,2481,Celia Benítez,7773412230,"Calle Zaragoza #75, Cuautilulco Barrio",@celia48,False,
+REU-2481-002,2481,Felipe Mora,7964027324,"Calle 16 de Sep #77, Cuautilulco Barrio",@felipe98,False,
+REU-2481-002,2481,Diana Quintero,7546270451,"Calle 16 de Sep #119, Cuautilulco Barrio",,True,2026-03-04
+REU-2481-002,2481,Beatriz Salinas,7435632899,"Calle Juárez #188, Cuautilulco Barrio",@beatriz54,False,
+REU-2481-002,2481,Tomás Guzmán,7240409084,"Calle Juárez #132, Cuautilulco Barrio",@tomás50,False,
+REU-2481-002,2481,Arturo Figueroa,7387195524,"Calle 16 de Sep #64, Cuautilulco Barrio",,True,2026-02-26
+REU-2481-002,2481,Rubén Palomino,7760756497,"Calle 16 de Sep #64, Cuautilulco Barrio",@rubén30,True,2026-03-03
+REU-2484-001,2484,Ramón Ibáñez,7530121245,"Calle Hidalgo #146, San Pedro Paredones",@ramón56,False,
+REU-2484-001,2484,Lourdes Bermúdez,7178954113,"Calle 16 de Sep #130, San Pedro Paredones",@lourdes80,False,
+REU-2484-001,2484,Leticia Sandoval,7769200551,"Calle Zaragoza #31, San Pedro Paredones",,False,
+REU-2484-001,2484,Margarita Reyes,7953514394,"Calle Juárez #143, San Pedro Paredones",@margarita28,True,2026-03-30
+REU-2484-001,2484,Celia Benítez,7530986098,"Calle Zaragoza #11, San Pedro Paredones",,True,2026-04-02
+REU-2484-001,2484,Laura Méndez,7963251765,"Calle 16 de Sep #133, San Pedro Paredones",@laura87,True,2026-03-30
+REU-2484-001,2484,Norma Jiménez,7250088694,"Calle Juárez #157, San Pedro Paredones",,False,
+REU-2484-001,2484,Mauricio Téllez,7761962359,"Calle Juárez #152, San Pedro Paredones",,False,
+REU-2484-001,2484,Alicia Vega,7671595541,"Calle 16 de Sep #182, San Pedro Paredones",@alicia70,False,
+REU-2484-001,2484,Amparo Zúñiga,7495521185,"Calle Juárez #173, San Pedro Paredones",,False,
+REU-2484-001,2484,Rodrigo Ceballos,7430366556,"Calle Hidalgo #153, San Pedro Paredones",@rodrigo93,False,
+REU-2484-001,2484,Armando Ochoa,7933397627,"Calle Zaragoza #148, San Pedro Paredones",,False,
+REU-2484-001,2484,David Rueda,7283085932,"Calle Zaragoza #162, San Pedro Paredones",@david58,True,2026-04-01
+REU-2484-001,2484,Fernanda Díaz,7360056579,"Calle Hidalgo #147, San Pedro Paredones",@fernanda24,True,2026-04-04
+REU-2484-001,2484,Rocío Espinosa,7436824737,"Calle 16 de Sep #39, San Pedro Paredones",@rocío36,True,2026-04-01
+REU-2484-002,2484,Dolores Arias,7701818966,"Calle Juárez #74, San Pedro Paredones",,False,
+REU-2484-002,2484,Leticia Sandoval,7507693523,"Calle 16 de Sep #89, San Pedro Paredones",@leticia28,False,
+REU-2484-002,2484,Rocío Espinosa,7408840720,"Calle Hidalgo #89, San Pedro Paredones",@rocío93,False,
+REU-2484-002,2484,Enrique Fuentes,7614407444,"Calle Morelos #52, San Pedro Paredones",@enrique44,False,
+REU-2484-002,2484,Ángel Contreras,7847508242,"Calle Juárez #36, San Pedro Paredones",,False,
+REU-2484-002,2484,Víctor Lara,7356927167,"Calle Morelos #13, San Pedro Paredones",@víctor77,False,
+REU-2484-002,2484,Pilar Navarro,7156361897,"Calle Hidalgo #106, San Pedro Paredones",,True,2026-02-23
+REU-2484-002,2484,Celia Benítez,7831424323,"Calle Morelos #2, San Pedro Paredones",@celia30,False,
+REU-2484-002,2484,Margarita Reyes,7610778600,"Calle 16 de Sep #167, San Pedro Paredones",,False,
+REU-2484-002,2484,Isabel Guerrero,7444851196,"Calle Juárez #166, San Pedro Paredones",,False,
+REU-2484-002,2484,Norma Jiménez,7800400428,"Calle Zaragoza #60, San Pedro Paredones",@norma14,False,
+REU-2484-002,2484,Lourdes Bermúdez,7287974375,"Calle 16 de Sep #46, San Pedro Paredones",@lourdes14,False,
+REU-2484-002,2484,Amparo Zúñiga,7526269674,"Calle 16 de Sep #48, San Pedro Paredones",@amparo47,False,
+REU-2484-002,2484,Hortensia Méndez,7109950544,"Calle Juárez #146, San Pedro Paredones",@hortensia52,False,
+REU-2484-002,2484,Beatriz Salinas,7788603957,"Calle Zaragoza #135, San Pedro Paredones",@beatriz27,False,
+REU-2485-001,2485,Mauricio Téllez,7386682971,"Calle Juárez #78, Tomatlán",@mauricio83,True,2026-03-30
+REU-2485-001,2485,Diana Quintero,7486066116,"Calle Morelos #16, Tomatlán",@diana69,True,2026-03-28
+REU-2485-001,2485,Sofía Aguilera,7535312769,"Calle Zaragoza #181, Tomatlán",@sofía98,False,
+REU-2485-001,2485,Felipe Mora,7416794215,"Calle Juárez #158, Tomatlán",,True,2026-04-01
+REU-2485-001,2485,Gerardo Montes,7613443905,"Calle Morelos #117, Tomatlán",@gerardo87,False,
+REU-2485-001,2485,Norma Jiménez,7853703117,"Calle Zaragoza #121, Tomatlán",@norma95,False,
+REU-2485-001,2485,David Rueda,7918040539,"Calle Morelos #175, Tomatlán",@david20,False,
+REU-2485-001,2485,Alicia Vega,7667121569,"Calle Juárez #20, Tomatlán",@alicia24,False,
+REU-2485-001,2485,Leticia Sandoval,7642762599,"Calle Morelos #147, Tomatlán",@leticia31,True,2026-03-26
+REU-2485-001,2485,Beatriz Salinas,7658712474,"Calle 16 de Sep #30, Tomatlán",@beatriz84,False,
+REU-2485-001,2485,Nicolás Ponce,7648011361,"Calle 16 de Sep #15, Tomatlán",@nicolás75,False,
+REU-2485-001,2485,Ricardo Peña,7705495031,"Calle Hidalgo #144, Tomatlán",@ricardo49,False,
+REU-2485-001,2485,Laura Méndez,7525146690,"Calle Juárez #1, Tomatlán",@laura84,False,
+REU-2485-001,2485,Lourdes Bermúdez,7469935052,"Calle Hidalgo #139, Tomatlán",@lourdes18,True,2026-03-24
+REU-2485-001,2485,Rocío Espinosa,7606882594,"Calle Hidalgo #74, Tomatlán",@rocío27,False,
+REU-2485-002,2485,Celia Benítez,7878488534,"Calle Hidalgo #9, San Pedro",@celia63,True,2026-03-26
+REU-2485-002,2485,Mauricio Téllez,7116799547,"Calle Morelos #53, San Pedro",,False,
+REU-2485-002,2485,Rodrigo Ceballos,7579362443,"Calle Zaragoza #173, San Pedro",@rodrigo16,False,
+REU-2485-002,2485,Fernanda Díaz,7531929128,"Calle 16 de Sep #60, San Pedro",@fernanda17,True,2026-03-12
+REU-2485-002,2485,Pilar Navarro,7351429015,"Calle Zaragoza #82, San Pedro",@pilar96,True,2026-03-16
+REU-2485-002,2485,Enrique Fuentes,7354373770,"Calle Juárez #37, San Pedro",@enrique76,False,
+REU-2485-002,2485,Nicolás Ponce,7395444277,"Calle Hidalgo #143, San Pedro",@nicolás32,True,2026-03-16
+REU-2485-002,2485,Isabel Guerrero,7558703133,"Calle Zaragoza #127, San Pedro",,False,
+REU-2485-002,2485,Tomás Guzmán,7790755362,"Calle 16 de Sep #135, San Pedro",,False,
+REU-2485-002,2485,Alicia Vega,7260221190,"Calle Juárez #97, San Pedro",,False,
+REU-2485-003,2485,Rocío Espinosa,7896152940,"Calle Hidalgo #192, Tomatlán",@rocío71,True,2026-03-01
+REU-2485-003,2485,Eduardo Castillo,7846923032,"Calle Zaragoza #181, Tomatlán",,False,
+REU-2485-003,2485,Ángel Contreras,7692790631,"Calle Juárez #199, Tomatlán",,False,
+REU-2485-003,2485,Fernanda Díaz,7796559239,"Calle Juárez #79, Tomatlán",,False,
+REU-2485-003,2485,Sandra Torres,7633947427,"Calle 16 de Sep #26, Tomatlán",@sandra70,False,
+REU-2485-003,2485,Martha Herrera,7443847870,"Calle Morelos #95, Tomatlán",,False,
+REU-2485-003,2485,Rodrigo Ceballos,7337591250,"Calle Morelos #5, Tomatlán",,True,2026-03-11
+REU-2485-003,2485,Ignacio Valdez,7721849977,"Calle 16 de Sep #76, Tomatlán",,False,
+REU-2485-003,2485,Leticia Sandoval,7507849850,"Calle Zaragoza #63, Tomatlán",@leticia93,False,
+REU-2485-003,2485,Norma Jiménez,7462456889,"Calle Juárez #196, Tomatlán",@norma92,False,
+REU-2485-003,2485,Mauricio Téllez,7594811370,"Calle Morelos #188, Tomatlán",@mauricio31,False,
+REU-2485-003,2485,Beatriz Salinas,7624325659,"Calle Morelos #139, Tomatlán",@beatriz17,True,2026-03-06
+REU-2485-003,2485,Tomás Guzmán,7179811669,"Calle Hidalgo #196, Tomatlán",,False,
+REU-2485-003,2485,Laura Méndez,7348499712,"Calle Hidalgo #182, Tomatlán",,True,2026-03-08
+REU-2486-001,2486,Diana Quintero,7184846271,"Calle Juárez #104, Centro",@diana41,False,
+REU-2486-001,2486,Mauricio Téllez,7342512383,"Calle Juárez #176, Centro",@mauricio20,False,
+REU-2486-001,2486,David Rueda,7797818850,"Calle Hidalgo #24, Centro",@david58,False,
+REU-2486-001,2486,Norma Jiménez,7160252954,"Calle Hidalgo #180, Centro",,False,
+REU-2486-001,2486,Hortensia Méndez,7565906941,"Calle Juárez #145, Centro",@hortensia22,False,
+REU-2486-001,2486,Arturo Figueroa,7145689604,"Calle Morelos #55, Centro",@arturo98,False,
+REU-2486-001,2486,Tomás Guzmán,7610564546,"Calle Juárez #12, Centro",@tomás97,False,
+REU-2486-001,2486,Enrique Fuentes,7683074772,"Calle Zaragoza #169, Centro",,False,
+REU-2486-001,2486,Rocío Espinosa,7437675369,"Calle Hidalgo #54, Centro",@rocío60,False,
+REU-2486-001,2486,Víctor Lara,7421346113,"Calle Morelos #145, Centro",,False,
+REU-2486-001,2486,Dolores Arias,7517853724,"Calle Zaragoza #85, Centro",,False,
+REU-2486-001,2486,Alicia Vega,7948790854,"Calle Hidalgo #129, Centro",@alicia54,False,
+REU-2486-001,2486,Estela Cabrera,7349262723,"Calle Hidalgo #88, Centro",@estela88,True,2026-03-27
+REU-2486-001,2486,Benjamín Acosta,7525956648,"Calle Juárez #8, Centro",@benjamín67,False,
+REU-2486-001,2486,Amparo Zúñiga,7482049366,"Calle Zaragoza #97, Centro",@amparo97,False,
+REU-2486-002,2486,David Rueda,7199926988,"Calle Zaragoza #154, Santa Julia",@david59,False,
+REU-2486-002,2486,Mauricio Téllez,7516396603,"Calle Hidalgo #186, Santa Julia",@mauricio41,True,2026-03-10
+REU-2486-002,2486,Amparo Zúñiga,7282088279,"Calle 16 de Sep #44, Santa Julia",,False,
+REU-2486-002,2486,Oswaldo Rangel,7629487801,"Calle Morelos #17, Santa Julia",,False,
+REU-2486-002,2486,Hortensia Méndez,7421856529,"Calle 16 de Sep #20, Santa Julia",,False,
+REU-2486-002,2486,Diana Quintero,7874059895,"Calle 16 de Sep #153, Santa Julia",@diana68,False,
+REU-2486-002,2486,Estela Cabrera,7107266407,"Calle 16 de Sep #86, Santa Julia",@estela58,True,2026-03-08
+REU-2486-002,2486,Norma Jiménez,7453842723,"Calle 16 de Sep #86, Santa Julia",@norma93,False,
+REU-2486-002,2486,Pablo Ríos,7246162540,"Calle Juárez #83, Santa Julia",@pablo98,False,
+REU-2486-002,2486,Sandra Torres,7290736564,"Calle 16 de Sep #82, Santa Julia",,True,2026-03-09
+REU-2486-003,2486,Ramón Ibáñez,7530361198,"Calle Zaragoza #130, Santa Julia",@ramón98,False,
+REU-2486-003,2486,Alicia Vega,7139476288,"Calle Juárez #180, Santa Julia",@alicia78,False,
+REU-2486-003,2486,Víctor Lara,7191248659,"Calle Hidalgo #197, Santa Julia",,False,
+REU-2486-003,2486,Enrique Fuentes,7278604592,"Calle Zaragoza #12, Santa Julia",@enrique92,False,
+REU-2486-003,2486,Dolores Arias,7529086280,"Calle Juárez #111, Santa Julia",,False,
+REU-2486-003,2486,Tomás Guzmán,7648334433,"Calle Zaragoza #143, Santa Julia",@tomás83,True,2026-03-12
+REU-2486-003,2486,Mauricio Téllez,7519977113,"Calle 16 de Sep #198, Santa Julia",@mauricio98,True,2026-03-14
+REU-2486-003,2486,Fernanda Díaz,7470405910,"Calle Hidalgo #124, Santa Julia",,False,
+REU-2486-003,2486,Martha Herrera,7192185888,"Calle Hidalgo #187, Santa Julia",,False,
+REU-2486-003,2486,Pilar Navarro,7588909690,"Calle Morelos #134, Santa Julia",@pilar70,False,
+REU-2486-003,2486,Benjamín Acosta,7848143863,"Calle 16 de Sep #82, Santa Julia",,True,2026-03-20
+REU-2486-004,2486,David Rueda,7320959407,"Calle Juárez #193, Santa Julia",@david18,False,
+REU-2486-004,2486,Rodrigo Ceballos,7958459117,"Calle Zaragoza #48, Santa Julia",,False,
+REU-2486-004,2486,Mauricio Téllez,7381699808,"Calle 16 de Sep #136, Santa Julia",@mauricio50,True,2026-02-25
+REU-2486-004,2486,Gerardo Montes,7756387421,"Calle 16 de Sep #151, Santa Julia",,False,
+REU-2486-004,2486,Pablo Ríos,7591624059,"Calle Zaragoza #45, Santa Julia",@pablo48,False,
+REU-2486-004,2486,Rocío Espinosa,7733688460,"Calle Hidalgo #173, Santa Julia",,False,
+REU-2486-004,2486,Amparo Zúñiga,7225572934,"Calle Morelos #96, Santa Julia",@amparo75,True,2026-02-28
+REU-2486-004,2486,Benjamín Acosta,7740407346,"Calle Morelos #148, Santa Julia",,False,
+REU-2486-004,2486,Fernanda Díaz,7677006598,"Calle Morelos #143, Santa Julia",,True,2026-03-06
+REU-2486-004,2486,Laura Méndez,7300895568,"Calle Juárez #116, Santa Julia",@laura55,False,
+REU-2486-005,2486,Nicolás Ponce,7334657613,"Calle 16 de Sep #27, 5 de Febrero",@nicolás93,False,
+REU-2486-005,2486,Hortensia Méndez,7419662531,"Calle Hidalgo #116, 5 de Febrero",,False,
+REU-2486-005,2486,Ramón Ibáñez,7193397288,"Calle 16 de Sep #31, 5 de Febrero",@ramón40,False,
+REU-2486-005,2486,Oswaldo Rangel,7731278472,"Calle Juárez #182, 5 de Febrero",@oswaldo64,True,2026-03-24
+REU-2486-005,2486,Diana Quintero,7942725534,"Calle Morelos #53, 5 de Febrero",@diana82,True,2026-03-15
+REU-2486-005,2486,Ricardo Peña,7401812742,"Calle Zaragoza #138, 5 de Febrero",,False,
+REU-2486-005,2486,Celia Benítez,7414214115,"Calle Juárez #147, 5 de Febrero",,False,
+REU-2486-005,2486,Ángel Contreras,7829392084,"Calle Hidalgo #35, 5 de Febrero",@ángel62,False,
+REU-2486-005,2486,Armando Ochoa,7397773877,"Calle Morelos #180, 5 de Febrero",@armando41,False,
+REU-2486-005,2486,Lourdes Bermúdez,7989575564,"Calle Morelos #195, 5 de Febrero",@lourdes60,True,2026-03-18
+REU-2486-005,2486,Estela Cabrera,7720005941,"Calle Juárez #161, 5 de Febrero",@estela67,False,
+REU-2486-005,2486,Fernanda Díaz,7925583165,"Calle Hidalgo #104, 5 de Febrero",@fernanda45,True,2026-03-25
+REU-2486-005,2486,Pablo Ríos,7496287154,"Calle 16 de Sep #125, 5 de Febrero",,False,
+REU-2486-005,2486,Amparo Zúñiga,7886756432,"Calle Hidalgo #188, 5 de Febrero",@amparo91,True,2026-03-25
+REU-2486-005,2486,Benjamín Acosta,7484638726,"Calle Hidalgo #137, 5 de Febrero",,False,
+REU-2488-001,2488,Nicolás Ponce,7796763109,"Calle Morelos #14, San Miguel",,False,
+REU-2488-001,2488,Laura Méndez,7851019450,"Calle Morelos #110, San Miguel",@laura22,False,
+REU-2488-001,2488,Mauricio Téllez,7183686071,"Calle Morelos #152, San Miguel",,True,2026-03-09
+REU-2488-001,2488,Rocío Espinosa,7109971784,"Calle Hidalgo #179, San Miguel",,False,
+REU-2488-001,2488,Alicia Vega,7553456129,"Calle Morelos #123, San Miguel",,True,2026-03-15
+REU-2488-001,2488,Víctor Lara,7884651200,"Calle Hidalgo #27, San Miguel",,False,
+REU-2488-001,2488,Beatriz Salinas,7247241457,"Calle 16 de Sep #199, San Miguel",@beatriz27,False,
+REU-2488-001,2488,Ángel Contreras,7827070406,"Calle Morelos #18, San Miguel",@ángel11,False,
+REU-2488-001,2488,Felipe Mora,7276218805,"Calle 16 de Sep #90, San Miguel",@felipe90,False,
+REU-2488-001,2488,Sofía Aguilera,7542070132,"Calle Zaragoza #176, San Miguel",@sofía37,False,
+REU-2488-001,2488,David Rueda,7250337960,"Calle Hidalgo #151, San Miguel",@david54,True,2026-03-03
+REU-2488-001,2488,Oswaldo Rangel,7437695739,"Calle Morelos #64, San Miguel",,False,
+REU-2488-001,2488,Sandra Torres,7745317824,"Calle Zaragoza #185, San Miguel",@sandra98,True,2026-03-10
+REU-2489-001,2489,Sofía Aguilera,7142763764,"Calle Hidalgo #102, Centro",@sofía90,True,2026-04-03
+REU-2489-001,2489,Alicia Vega,7923678093,"Calle 16 de Sep #109, Centro",@alicia20,False,
+REU-2489-001,2489,Fernanda Díaz,7677303044,"Calle Zaragoza #40, Centro",,False,
+REU-2489-001,2489,Hortensia Méndez,7649009234,"Calle Morelos #40, Centro",@hortensia60,False,
+REU-2489-001,2489,Estela Cabrera,7919505668,"Calle Hidalgo #80, Centro",@estela40,False,
+REU-2489-001,2489,Armando Ochoa,7566523205,"Calle Hidalgo #117, Centro",@armando17,True,2026-04-01
+REU-2489-001,2489,David Rueda,7896387342,"Calle Morelos #31, Centro",,False,
+REU-2489-001,2489,Leticia Sandoval,7275913951,"Calle 16 de Sep #89, Centro",@leticia43,True,2026-03-31
+REU-2489-001,2489,Martha Herrera,7905066256,"Calle Juárez #188, Centro",@martha13,True,2026-04-02
+REU-2489-001,2489,Laura Méndez,7560983746,"Calle Juárez #135, Centro",,False,
+REU-2489-001,2489,Margarita Reyes,7719175016,"Calle Hidalgo #128, Centro",@margarita56,False,
+REU-2489-001,2489,Sandra Torres,7708689346,"Calle Morelos #95, Centro",,True,2026-04-13
+REU-2489-002,2489,Ángel Contreras,7930568802,"Calle Juárez #84, Centro",,False,
+REU-2489-002,2489,Martha Herrera,7496124146,"Calle Morelos #75, Centro",@martha48,False,
+REU-2489-002,2489,Hortensia Méndez,7360472583,"Calle 16 de Sep #95, Centro",@hortensia73,False,
+REU-2489-002,2489,Armando Ochoa,7933101205,"Calle Morelos #188, Centro",@armando41,False,
+REU-2489-002,2489,Ricardo Peña,7540272920,"Calle Hidalgo #60, Centro",@ricardo91,True,2026-03-17
+REU-2489-002,2489,Diana Quintero,7110302352,"Calle Juárez #1, Centro",@diana58,False,
+REU-2489-002,2489,Eduardo Castillo,7880841206,"Calle Juárez #27, Centro",,False,
+REU-2489-002,2489,David Rueda,7550773824,"Calle 16 de Sep #16, Centro",@david28,False,
+REU-2489-002,2489,Pilar Navarro,7199886596,"Calle Hidalgo #60, Centro",@pilar76,False,
+REU-2489-002,2489,Gerardo Montes,7499960213,"Calle 16 de Sep #192, Centro",,False,
+REU-2489-002,2489,Dolores Arias,7784205125,"Calle 16 de Sep #20, Centro",@dolores17,True,2026-03-05
+REU-2489-002,2489,Pablo Ríos,7240346956,"Calle Morelos #75, Centro",,False,
+REU-2489-002,2489,Rocío Espinosa,7959870518,"Calle 16 de Sep #180, Centro",@rocío51,False,
+REU-2489-002,2489,Sandra Torres,7392010397,"Calle Morelos #20, Centro",@sandra27,False,
+REU-2489-002,2489,Ramón Ibáñez,7727825475,"Calle Hidalgo #40, Centro",,False,
+REU-2489-003,2489,Eduardo Castillo,7963177562,"Calle Morelos #32, Barrio Norte",,False,
+REU-2489-003,2489,Víctor Lara,7338680070,"Calle Morelos #51, Barrio Norte",@víctor57,False,
+REU-2489-003,2489,Dolores Arias,7792225271,"Calle Hidalgo #150, Barrio Norte",@dolores19,False,
+REU-2489-003,2489,David Rueda,7312332805,"Calle 16 de Sep #33, Barrio Norte",,True,2026-03-03
+REU-2489-003,2489,Pablo Ríos,7968536025,"Calle Juárez #32, Barrio Norte",,False,
+REU-2489-003,2489,Gerardo Montes,7280377032,"Calle Zaragoza #111, Barrio Norte",@gerardo60,False,
+REU-2489-003,2489,Amparo Zúñiga,7510952606,"Calle 16 de Sep #45, Barrio Norte",,False,
+REU-2489-003,2489,Enrique Fuentes,7395259429,"Calle Juárez #115, Barrio Norte",@enrique14,False,
+REU-2489-003,2489,Norma Jiménez,7762474187,"Calle Morelos #166, Barrio Norte",,False,
+REU-2489-004,2489,Sofía Aguilera,7386181187,"Calle Zaragoza #189, Centro",,True,2026-02-25
+REU-2489-004,2489,Lourdes Bermúdez,7335591393,"Calle Zaragoza #100, Centro",,False,
+REU-2489-004,2489,Pilar Navarro,7286521875,"Calle Morelos #61, Centro",@pilar99,False,
+REU-2489-004,2489,Pablo Ríos,7735185398,"Calle Hidalgo #181, Centro",@pablo82,False,
+REU-2489-004,2489,Ángel Contreras,7704633564,"Calle Morelos #127, Centro",@ángel32,False,
+REU-2489-004,2489,Eduardo Castillo,7196913120,"Calle Hidalgo #60, Centro",@eduardo12,False,
+REU-2489-004,2489,Leticia Sandoval,7100733897,"Calle Juárez #158, Centro",,False,
+REU-2489-004,2489,Isabel Guerrero,7290546084,"Calle Juárez #16, Centro",,True,2026-03-05
+REU-2489-004,2489,Benjamín Acosta,7252098390,"Calle Hidalgo #135, Centro",@benjamín19,False,
+REU-2489-004,2489,Felipe Mora,7810966933,"Calle 16 de Sep #151, Centro",,False,
+REU-2489-004,2489,Celia Benítez,7246513857,"Calle Morelos #188, Centro",@celia91,False,
+REU-2727-001,2727,David Rueda,7280267742,"Calle Hidalgo #182, Centro",@david52,False,
+REU-2727-001,2727,Lourdes Bermúdez,7384769690,"Calle Morelos #64, Centro",@lourdes54,False,
+REU-2727-001,2727,Sofía Aguilera,7216001265,"Calle Hidalgo #13, Centro",,False,
+REU-2727-001,2727,Pilar Navarro,7278604541,"Calle 16 de Sep #127, Centro",@pilar54,False,
+REU-2727-001,2727,Norma Jiménez,7208908082,"Calle 16 de Sep #148, Centro",@norma97,False,
+REU-2727-001,2727,Ramón Ibáñez,7179144854,"Calle Hidalgo #76, Centro",,True,2026-04-06
+REU-2727-001,2727,Tomás Guzmán,7212447665,"Calle Hidalgo #88, Centro",,False,
+REU-2727-001,2727,Rubén Palomino,7885963005,"Calle Hidalgo #141, Centro",@rubén21,False,
+REU-2727-001,2727,Martha Herrera,7758896006,"Calle 16 de Sep #181, Centro",,False,
+REU-2727-001,2727,Ricardo Peña,7277164387,"Calle Zaragoza #112, Centro",,False,
+REU-2727-001,2727,Rodrigo Ceballos,7303994042,"Calle 16 de Sep #179, Centro",@rodrigo79,True,2026-04-02
+REU-2727-002,2727,Margarita Reyes,7496642020,"Calle Morelos #115, Dos Caminos",,False,
+REU-2727-002,2727,Felipe Mora,7382824466,"Calle Morelos #69, Dos Caminos",@felipe29,False,
+REU-2727-002,2727,Leticia Sandoval,7816688804,"Calle Hidalgo #22, Dos Caminos",@leticia79,False,
+REU-2727-002,2727,Ricardo Peña,7912239392,"Calle Zaragoza #59, Dos Caminos",@ricardo59,False,
+REU-2727-002,2727,Víctor Lara,7549502766,"Calle Zaragoza #176, Dos Caminos",@víctor70,False,
+REU-2727-002,2727,Gerardo Montes,7353018691,"Calle 16 de Sep #77, Dos Caminos",,False,
+REU-2727-002,2727,Benjamín Acosta,7866979905,"Calle Hidalgo #129, Dos Caminos",@benjamín76,False,
+REU-2727-002,2727,Ramón Ibáñez,7827497537,"Calle Zaragoza #38, Dos Caminos",,False,
+REU-2727-002,2727,Dolores Arias,7285627380,"Calle Morelos #55, Dos Caminos",@dolores26,False,
+REU-2727-002,2727,Sandra Torres,7833500385,"Calle 16 de Sep #52, Dos Caminos",@sandra90,True,2026-03-08
+REU-2727-002,2727,Sofía Aguilera,7376903372,"Calle Juárez #187, Dos Caminos",@sofía18,True,2026-03-16
+REU-2727-002,2727,Ángel Contreras,7526656677,"Calle Zaragoza #84, Dos Caminos",@ángel76,True,2026-03-15
+REU-2727-002,2727,Rocío Espinosa,7113275526,"Calle Zaragoza #151, Dos Caminos",@rocío63,False,
+REU-2727-002,2727,Lourdes Bermúdez,7259128258,"Calle Zaragoza #151, Dos Caminos",@lourdes22,True,2026-03-09
+REU-2727-002,2727,David Rueda,7704177085,"Calle Hidalgo #74, Dos Caminos",@david54,False,
+REU-2809-001,2809,Eduardo Castillo,7627872109,"Calle Hidalgo #59, El Rosal",,False,
+REU-2809-001,2809,Leticia Sandoval,7575786397,"Calle Juárez #69, El Rosal",@leticia87,False,
+REU-2809-001,2809,Ángel Contreras,7301794412,"Calle 16 de Sep #55, El Rosal",@ángel62,False,
+REU-2809-001,2809,Armando Ochoa,7915499713,"Calle Zaragoza #96, El Rosal",@armando75,False,
+REU-2809-001,2809,Pablo Ríos,7170455681,"Calle Juárez #182, El Rosal",@pablo27,False,
+REU-2809-001,2809,Rubén Palomino,7662948033,"Calle Zaragoza #8, El Rosal",,False,
+REU-2809-001,2809,Víctor Lara,7315528733,"Calle Hidalgo #64, El Rosal",,False,
+REU-2809-001,2809,Arturo Figueroa,7856594938,"Calle Morelos #71, El Rosal",,True,2026-03-10
+REU-2809-002,2809,Pilar Navarro,7753204271,"Calle Juárez #183, La Melga",@pilar92,True,2026-03-08
+REU-2809-002,2809,Rodrigo Ceballos,7504237434,"Calle Juárez #118, La Melga",,False,
+REU-2809-002,2809,Ignacio Valdez,7827133833,"Calle Zaragoza #160, La Melga",,False,
+REU-2809-002,2809,Ángel Contreras,7811198748,"Calle Juárez #144, La Melga",@ángel87,True,2026-03-12
+REU-2809-002,2809,Estela Cabrera,7834883010,"Calle Hidalgo #124, La Melga",,False,
+REU-2809-002,2809,Diana Quintero,7787833374,"Calle Juárez #71, La Melga",,False,
+REU-2809-002,2809,Pablo Ríos,7799506796,"Calle Juárez #49, La Melga",,False,
+REU-2809-002,2809,Laura Méndez,7160961339,"Calle Zaragoza #104, La Melga",@laura97,False,
+REU-2809-002,2809,Leticia Sandoval,7803731001,"Calle 16 de Sep #76, La Melga",,True,2026-03-04
+REU-2809-002,2809,Nicolás Ponce,7516907018,"Calle Hidalgo #150, La Melga",@nicolás83,False,
+REU-2809-002,2809,Martha Herrera,7468472812,"Calle Morelos #176, La Melga",@martha70,False,
+REU-2809-002,2809,Sofía Aguilera,7821413281,"Calle Juárez #130, La Melga",,False,
+REU-2809-002,2809,Felipe Mora,7699414278,"Calle Morelos #76, La Melga",,True,2026-03-14
+REU-2809-002,2809,Víctor Lara,7878663220,"Calle Zaragoza #196, La Melga",@víctor97,True,2026-03-08
+REU-2809-002,2809,Gerardo Montes,7802693852,"Calle Hidalgo #57, La Melga",,False,
+REU-2809-003,2809,Rubén Palomino,7289863614,"Calle Juárez #163, Eloxochitlan",,False,
+REU-2809-003,2809,Estela Cabrera,7324822604,"Calle Morelos #148, Eloxochitlan",@estela72,False,
+REU-2809-003,2809,Hortensia Méndez,7937252824,"Calle Hidalgo #34, Eloxochitlan",@hortensia91,False,
+REU-2809-003,2809,Nicolás Ponce,7560662565,"Calle 16 de Sep #99, Eloxochitlan",,False,
+REU-2809-003,2809,Tomás Guzmán,7884539206,"Calle Juárez #4, Eloxochitlan",@tomás77,False,
+REU-2809-003,2809,Sofía Aguilera,7104427929,"Calle Morelos #58, Eloxochitlan",@sofía54,True,2026-03-15
+REU-2809-003,2809,David Rueda,7210282113,"Calle 16 de Sep #129, Eloxochitlan",@david31,False,
+REU-2809-003,2809,Felipe Mora,7420192227,"Calle Juárez #117, Eloxochitlan",@felipe86,True,2026-03-05
+REU-2809-003,2809,Ramón Ibáñez,7565644493,"Calle Morelos #88, Eloxochitlan",@ramón72,False,
+REU-2809-004,2809,Pablo Ríos,7836307746,"Calle Hidalgo #78, Eloxochitlan",@pablo22,True,2026-03-14
+REU-2809-004,2809,Eduardo Castillo,7389885759,"Calle Zaragoza #156, Eloxochitlan",@eduardo63,False,
+REU-2809-004,2809,Ricardo Peña,7212650803,"Calle Zaragoza #185, Eloxochitlan",@ricardo46,False,
+REU-2809-004,2809,Estela Cabrera,7634443249,"Calle Morelos #156, Eloxochitlan",,True,2026-03-04
+REU-2809-004,2809,Amparo Zúñiga,7661723850,"Calle Morelos #92, Eloxochitlan",@amparo47,False,
+REU-2809-004,2809,Fernanda Díaz,7632956813,"Calle Morelos #177, Eloxochitlan",@fernanda52,True,2026-03-11
+REU-2809-004,2809,Benjamín Acosta,7821160591,"Calle Hidalgo #29, Eloxochitlan",@benjamín95,True,2026-03-03
+REU-2809-004,2809,Dolores Arias,7196725534,"Calle Zaragoza #20, Eloxochitlan",@dolores22,False,
+REU-2809-004,2809,Leticia Sandoval,7791851361,"Calle Morelos #117, Eloxochitlan",@leticia47,False,
+REU-2809-004,2809,Isabel Guerrero,7153773200,"Calle Hidalgo #45, Eloxochitlan",@isabel47,False,
+REU-2809-005,2809,Fernanda Díaz,7618268171,"Calle Zaragoza #174, Eloxochitlan",@fernanda88,False,
+REU-2809-005,2809,Leticia Sandoval,7485042651,"Calle Zaragoza #8, Eloxochitlan",@leticia26,False,
+REU-2809-005,2809,Estela Cabrera,7624117847,"Calle Hidalgo #106, Eloxochitlan",@estela18,False,
+REU-2809-005,2809,Beatriz Salinas,7437410428,"Calle Hidalgo #181, Eloxochitlan",@beatriz77,False,
+REU-2809-005,2809,Ricardo Peña,7719172154,"Calle Zaragoza #58, Eloxochitlan",@ricardo95,False,
+REU-2809-005,2809,Alicia Vega,7657379037,"Calle Zaragoza #177, Eloxochitlan",@alicia22,False,
+REU-2809-005,2809,Eduardo Castillo,7880236611,"Calle Morelos #124, Eloxochitlan",,False,
+REU-2809-005,2809,Hortensia Méndez,7513258121,"Calle Morelos #143, Eloxochitlan",@hortensia88,False,
+REU-2809-005,2809,Norma Jiménez,7268499484,"Calle Zaragoza #121, Eloxochitlan",@norma31,True,2026-03-06
+REU-2809-005,2809,Ignacio Valdez,7444277942,"Calle Morelos #85, Eloxochitlan",@ignacio16,True,2026-03-03

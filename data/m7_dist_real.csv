@@ -1,0 +1,39 @@
+﻿id_edicion_text,numero_edicion_number,seccion_electoral_text,ejemplares_planeados_number,ejemplares_entregados_number,nombre_distribuidor_text,tipo_distribuidor_option,fecha_distribucion_date,observaciones_text
+ED-2026-01,1,2461,65,51,Promotor 3,Promotor de brigada,2026-02-07,Se coordinó con anfitrión de reunión
+ED-2026-01,1,2463,64,56,Promotor 8,Promotor de brigada,2026-02-13,Distribuido en punto de encuentro de brigada
+ED-2026-01,1,2465,79,77,Promotor 7,Promotor de brigada,2026-02-09,"Zona de difícil acceso, entrega parcial"
+ED-2026-01,1,2467,139,123,Promotor 2,Equipo editorial,2026-02-05,Se coordinó con anfitrión de reunión
+ED-2026-01,1,2470,131,98,Promotor 6,Promotor de brigada,2026-02-07,Distribuido en punto de encuentro de brigada
+ED-2026-01,1,2471,216,214,Promotor 3,Promotor de brigada,2026-02-09,
+ED-2026-01,1,2473,100,89,Promotor 3,Promotor de brigada,2026-02-06,Entrega completa sin incidencias
+ED-2026-01,1,2474,82,78,Promotor 7,Promotor de brigada,2026-02-05,"Zona de difícil acceso, entrega parcial"
+ED-2026-01,1,2475,119,99,Promotor 7,Promotor de brigada,2026-02-12,Entrega completa sin incidencias
+ED-2026-01,1,2478,107,91,Promotor 6,Equipo editorial,2026-02-06,Entrega completa sin incidencias
+ED-2026-01,1,2482,47,38,Promotor 7,Promotor de brigada,2026-02-06,"Zona de difícil acceso, entrega parcial"
+ED-2026-01,1,2484,120,115,Promotor 6,Promotor de brigada,2026-02-05,
+ED-2026-01,1,2485,89,79,Promotor 6,Promotor de brigada,2026-02-04,Distribuido en punto de encuentro de brigada
+ED-2026-01,1,2488,201,169,Promotor 3,Promotor de brigada,2026-02-05,Se coordinó con anfitrión de reunión
+ED-2026-01,1,2489,242,195,Promotor 5,Promotor de brigada,2026-02-07,
+ED-2026-01,1,2727,120,111,Promotor 7,Equipo editorial,2026-02-07,Distribuido en punto de encuentro de brigada
+ED-2026-01,1,2809,90,87,Promotor 5,Equipo editorial,2026-02-05,Distribuido en punto de encuentro de brigada
+ED-2026-02,2,2461,56,47,Promotor 3,Equipo editorial,2026-03-13,Distribuido en punto de encuentro de brigada
+ED-2026-02,2,2463,78,67,Promotor 6,Promotor de brigada,2026-03-10,Se coordinó con anfitrión de reunión
+ED-2026-02,2,2465,40,32,Promotor 3,Equipo editorial,2026-03-07,
+ED-2026-02,2,2467,133,123,Promotor 6,Equipo editorial,2026-03-10,Entrega completa sin incidencias
+ED-2026-02,2,2470,94,70,Promotor 3,Equipo editorial,2026-03-08,"Zona de difícil acceso, entrega parcial"
+ED-2026-02,2,2471,183,156,Promotor 5,Promotor de brigada,2026-03-12,
+ED-2026-02,2,2473,82,63,Promotor 1,Equipo editorial,2026-03-04,Se coordinó con anfitrión de reunión
+ED-2026-02,2,2474,127,117,Promotor 5,Promotor de brigada,2026-03-13,Entrega completa sin incidencias
+ED-2026-02,2,2475,130,106,Promotor 3,Promotor de brigada,2026-03-09,Distribuido en punto de encuentro de brigada
+ED-2026-02,2,2478,129,119,Promotor 5,Promotor de brigada,2026-03-09,Se coordinó con anfitrión de reunión
+ED-2026-02,2,2480,139,128,Promotor 8,Equipo editorial,2026-03-06,
+ED-2026-02,2,2481,101,100,Promotor 1,Promotor de brigada,2026-03-12,Se coordinó con anfitrión de reunión
+ED-2026-02,2,2482,71,66,Promotor 5,Promotor de brigada,2026-03-13,
+ED-2026-02,2,2484,120,94,Promotor 7,Promotor de brigada,2026-03-04,Entrega completa sin incidencias
+ED-2026-02,2,2485,123,115,Promotor 8,Promotor de brigada,2026-03-06,
+ED-2026-02,2,2486,249,198,Promotor 3,Equipo editorial,2026-03-11,Se coordinó con anfitrión de reunión
+ED-2026-02,2,2488,234,229,Promotor 3,Equipo editorial,2026-03-12,
+ED-2026-02,2,2489,218,169,Promotor 3,Promotor de brigada,2026-03-06,
+ED-2026-02,2,2727,91,82,Promotor 6,Promotor de brigada,2026-03-06,
+ED-2026-02,2,2809,100,97,Promotor 4,Equipo editorial,2026-03-10,"Zona de difícil acceso, entrega parcial"
+ED-2026-02,2,2895,47,46,Promotor 4,Equipo editorial,2026-03-04,
