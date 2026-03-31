@@ -530,7 +530,7 @@ def main():
 
     # ── PULSO OPERATIVO ───────────────────────────────────────────────────────
     st.markdown(
-        f'<div class="section-title">⚡ Pulso operativo — corte al {FECHA_CORTE_OPERATIVO}</div>',
+        f'<div class="section-title">⚡ Pulso operativo</div>',
         unsafe_allow_html=True,
     )
 
