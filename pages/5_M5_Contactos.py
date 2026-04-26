@@ -19,11 +19,10 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# ── Demo mode — no modificar ────────────────────────────────────────────────
-from demo_mode import check_demo_mode
-check_demo_mode()
 
-
+from auth import require_auth, render_sidebar_usuario, puede, get_nombre, get_rol
+require_auth()
+render_sidebar_usuario()
 FECHA_CORTE             = "2026-02-14"  # ajustar si el CSV nuevo tiene fecha diferente
 SECCIONES_PRIORITARIAS  = [2471, 2486, 2488, 2489]
 LAT_MIN, LAT_MAX        = 19.5, 20.5
@@ -97,6 +96,16 @@ html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
     color: #ffffff !important;
     border-color: #007cab !important;
 }
+[data-testid="stSidebar"] .stMultiSelect [data-baseweb="tag"] {
+    background-color: #007cab !important;
+    color: #ffffff !important;
+}
+[data-testid="stSidebar"] .stMultiSelect [data-baseweb="select"] > div {
+    background-color: #004a6e !important;
+}
+[data-testid="stSidebar"] .stMultiSelect input {
+    color: #e8edf5 !important;
+}
 [data-testid="stSidebar"] .stSelectbox svg,
 [data-testid="stSidebar"] .stMultiSelect svg {
     fill: #00c0ff !important;
@@ -136,6 +145,55 @@ html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
 }
 </style>
 """, unsafe_allow_html=True)
+
+
+# ── NORMALIZACIÓN E.164 ───────────────────────────────────────────────────────
+def _normalizar_e164(x) -> str | None:
+    """Convierte número de celular a formato E.164 (52XXXXXXXXXX).
+    Maneja el formato float con .0 que exporta Bubble.
+    Retorna None si el número no es válido.
+    """
+    if pd.isna(x):
+        return None
+    try:
+        s = str(int(float(x)))
+    except Exception:
+        import re as _re
+        s = _re.sub(r"\D", "", str(x))
+    if len(s) == 10:
+        return "52" + s
+    elif len(s) == 12 and s.startswith("52"):
+        return s
+    return None
+
+
+# ── TEMAS DE CAMPAÑA ──────────────────────────────────────────────────────────
+TEMAS_CAMPAÑA = {
+    "Problemáticas locales": [
+        "Seguridad",
+        "Pavimento / Calles",
+        "Agua potable",
+        "Empleo",
+        "Salud",
+        "Educación",
+        "Alumbrado público",
+    ],
+    "Posicionamiento de candidato": [
+        "Honestidad",
+        "Cercanía",
+        "Respeto a mujeres",
+        "Conoce el municipio",
+        "Cumple promesas",
+    ],
+}
+
+TIPO_TEMA = {
+    t: "Problemática"
+    for t in TEMAS_CAMPAÑA["Problemáticas locales"]
+} | {
+    t: "Posicionamiento"
+    for t in TEMAS_CAMPAÑA["Posicionamiento de candidato"]
+}
 
 
 # ── HELPERS ───────────────────────────────────────────────────────────────────
@@ -205,8 +263,9 @@ def cargar_datos(raw: bytes) -> pd.DataFrame:
     df["prob_grupo"]  = df["p2_1_autobinding_option_p2_1_texto"].apply(prob_grupo)
     df["tiene_cel"]   = df["celular_encuestado_number"].notna()
     df["celular_fmt"] = df["celular_encuestado_number"].apply(
-        lambda x: str(int(x)) if pd.notna(x) else ""
+        lambda x: str(int(float(x))) if pd.notna(x) else ""
     )
+    df["celular_e164"] = df["celular_encuestado_number"].apply(_normalizar_e164)
     df["semana"] = df["Created Date"].apply(lambda d: semana_label(d, corte))
     df["seccion"] = df["seccion_electoral_text"].apply(
         lambda x: int(x) if pd.notna(x) else None
@@ -331,7 +390,12 @@ def _build_user_prompt(
         if perfil["atribs_debiles"] else ""
     )
     enfasis_str = (
-        f"\nÉNFASIS ADICIONAL (debe estar presente en el mensaje): {enfasis.strip()}"
+        f"\n━━━ PROMPT DOMINANTE DE REDACCIÓN ━━━\n"
+        f"{enfasis.strip()}\n"
+        f"Este texto define la dirección central del mensaje. "
+        f"Úsalo como eje narrativo principal. El problema del grupo puede aparecer "
+        f"como contexto o gancho, pero el mensaje gira en torno a esta instrucción.\n"
+        f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
         if enfasis and enfasis.strip() else ""
     )
 
@@ -403,6 +467,16 @@ def _build_user_prompt(
             f"Objetivo: {INSTRUCCION_SEGMENTO[segmento]}"
         )
 
+    instruccion_final = (
+        "Escribe exactamente 3 variantes de SMS. "
+        "El PROMPT DOMINANTE define el eje del mensaje — síguela al pie de la letra. "
+        "El perfil del grupo y su problema principal son contexto: "
+        "puedes usarlos como gancho de apertura o como respaldo, pero no compiten con el eje dominante."
+        if enfasis and enfasis.strip() else
+        "Escribe exactamente 3 variantes de SMS. "
+        "Cada una ancla en el problema principal del grupo y cierra con acción concreta."
+    )
+
     return (
         f"{seg_ctx}\n"
         f"Tamaño del grupo: {perfil['n']} personas\n"
@@ -414,8 +488,7 @@ def _build_user_prompt(
         f"Regla del nombre: {regla_nombre}\n"
         f"Regla del partido: {regla_partido}\n"
         f"Regla de tono: {regla_tono}\n\n"
-        f"Escribe exactamente 3 variantes de SMS. "
-        f"Cada una ancla en el problema principal y cierra con acción concreta."
+        f"{instruccion_final}"
     )
 
 
@@ -500,6 +573,51 @@ def generar_variantes_sms(
 # UI PRINCIPAL
 # ══════════════════════════════════════════════════════════════════════════════
 
+# ── Resolver CSV de inducción al nivel del módulo (antes del sidebar y del header)
+# Hacerlo aquí garantiza que os.getcwd() sea la raíz del repo en Streamlit Cloud.
+import glob as _glob
+_BASE_M5 = os.path.dirname(os.path.abspath(__file__))
+_RUTAS_RAW_M5 = [
+    os.path.join(os.getcwd(), "raw"),                             # raíz del repo (Streamlit Cloud)
+    os.path.join(_BASE_M5, "..", "raw"),                          # relativa al script
+    os.path.join(_BASE_M5, "raw"),                                # mismo directorio
+    "/Users/omartellez/Inteligencia_Zacatlan/raw",               # ruta absoluta local Omar
+    os.path.expanduser("~/Inteligencia_Zacatlan/raw"),           # home genérico
+]
+CSV_AUTO = ""
+for _rdir in _RUTAS_RAW_M5:
+    _found = sorted(_glob.glob(os.path.join(_rdir, "induccion_*.csv")), reverse=True)
+    if _found:
+        CSV_AUTO = _found[0]
+        break
+tiene_auto = bool(CSV_AUTO) and os.path.exists(CSV_AUTO)
+
+# ── HEADER ────────────────────────────────────────────────────────────────────
+LOGO_B64_M5 = "/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAQABAADASIAAhEBAxEB/8QAHAABAQEAAwEBAQAAAAAAAAAAAAECBgcIAwUE/8QASBABAAIBAgMDBwkGBQIEBwEAAAECAwQFBgcREiExFyI1QVFhchMyUlRxgZGS0QgUQqGxwRUjYuHwY4IkMzSDFjdDRVWT8aL/xAAcAQEBAAIDAQEAAAAAAAAAAAAAAgEGBAUHAwj/xAA7EQEAAQMBAwgHBwQDAQEAAAAAAQIDBAUGEXESFSExNEFRUhMyU5GhsdEUFiIjYYHBB0Lh8CQzYnJD/9oADAMBAAIRAxEAPwDxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH//2Q=="
+st.markdown(f"""
+<div style='background:linear-gradient(135deg,#004a6e 0%,#007cab 60%,#00c0ff 100%);
+     border-radius:16px;padding:24px 32px;margin-bottom:24px;position:relative;overflow:hidden;'>
+  <div style='position:absolute;top:-40px;right:-40px;width:140px;height:140px;
+       border-radius:50%;background:rgba(255,255,255,0.05);'></div>
+  <div style='display:flex;align-items:center;gap:18px;margin-bottom:10px;'>
+    <img src="data:image/png;base64,{LOGO_B64_M5}"
+         style='width:52px;height:52px;border-radius:10px;mix-blend-mode:lighten;flex-shrink:0;'>
+    <div>
+      <div style='font-size:0.70rem;font-weight:700;letter-spacing:0.13em;
+           color:#00c0ff;text-transform:uppercase;margin-bottom:4px;'>
+        Tu operación activada
+      </div>
+      <div style='font-size:1.45rem;font-weight:800;color:#ffffff;line-height:1.2;'>
+        ¿A quién le mando el mensaje?
+      </div>
+    </div>
+  </div>
+  <div style='color:rgba(255,255,255,0.70);font-size:0.88rem;margin-left:70px;'>
+    Base de contactos segmentada · El mensaje correcto, a la persona correcta · JCLY Morena 2026
+  </div>
+</div>
+""", unsafe_allow_html=True)
+
 # ── SIDEBAR ───────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown(
@@ -515,31 +633,31 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
 
-    # ── Carga automática desde raw/ si existe ────────────────────────────────
-    BASE_M5   = os.path.dirname(os.path.abspath(__file__))
-    CSV_AUTO  = os.path.join(BASE_M5, "..", "raw", "induccion_032726.csv")
-    tiene_auto = os.path.exists(CSV_AUTO)
+    # ── CSV_AUTO y tiene_auto se resuelven antes del sidebar (nivel módulo) ──
 
     if tiene_auto:
         st.markdown(
-            "<p style='color:#2a9d8f;font-size:0.82rem;'>✅ <b>induccion_032726.csv</b> "
+            f"<p style='color:#2a9d8f;font-size:0.82rem;'>✅ <b>{os.path.basename(CSV_AUTO)}</b> "
             "cargado automáticamente.</p>",
             unsafe_allow_html=True,
         )
     else:
         st.markdown(
             "<p style='color:#f4a261;font-size:0.82rem;'>⚠️ No se encontró "
-            "induccion_032726.csv en raw/</p>",
+            "ningún CSV de inducción en raw/</p>",
             unsafe_allow_html=True,
         )
 
-    st.markdown(
-        "<p style='font-size:0.78rem;color:#b0c4e8;margin:6px 0 4px;'>"
-        "Subir CSV más reciente (opcional):</p>",
-        unsafe_allow_html=True,
-    )
-    archivo = st.file_uploader("CSV del operativo", type=["csv"],
-                               label_visibility="collapsed")
+    if puede("puede_subir_csv"):
+        st.markdown(
+            "<p style='font-size:0.78rem;color:#b0c4e8;margin:6px 0 4px;'>"
+            "Subir CSV más reciente (opcional):</p>",
+            unsafe_allow_html=True,
+        )
+        archivo = st.file_uploader("CSV del operativo", type=["csv"],
+                                   label_visibility="collapsed")
+    else:
+        archivo = None
 
     # ── Determinar fuente de datos ───────────────────────────────────────────
     if archivo is not None:
@@ -548,7 +666,7 @@ with st.sidebar:
     elif tiene_auto:
         with open(CSV_AUTO, "rb") as f:
             raw_bytes = f.read()
-        fuente_label = "induccion_032726.csv"
+        fuente_label = os.path.basename(CSV_AUTO)
     else:
         st.markdown(
             "<p style='color:#00c0ff;font-size:0.85rem;'>👆 Sube el CSV exportado "
@@ -596,6 +714,16 @@ with st.sidebar:
     semanas_disp = sorted(df_act["semana"].unique())
     sem_sel = st.multiselect("¿Qué semanas?", semanas_disp, default=semanas_disp)
 
+    probs_disp = sorted(df_act["prob_grupo"].dropna().unique().tolist())
+    prob_sel = st.multiselect(
+        "¿Qué problemática?",
+        options=probs_disp,
+        default=[],
+        placeholder="Todas (sin filtro)",
+        help="Filtra contactos por la problemática principal que declararon. "
+             "Afecta la lista, el perfil del grupo y los mensajes generados.",
+    )
+
     solo_cel = st.checkbox("Solo contactos con celular", value=False)
 
     st.markdown("<hr>", unsafe_allow_html=True)
@@ -629,6 +757,8 @@ if sec_sel != "Todas las secciones":
     df_f = df_f[df_f["seccion"] == int(sec_sel)]
 if sem_sel:
     df_f = df_f[df_f["semana"].isin(sem_sel)]
+if prob_sel:
+    df_f = df_f[df_f["prob_grupo"].isin(prob_sel)]
 if solo_cel:
     df_f = df_f[df_f["tiene_cel"]]
 
@@ -645,31 +775,74 @@ baja_cobertura = [s for s in SECCIONES_PRIORITARIAS
                   and len(df_raw[df_raw["seccion"] == s]) < umbral]
 n_alertas = len(sin_cobertura) + len(baja_cobertura)
 
-# ── HEADER ────────────────────────────────────────────────────────────────────
-LOGO_B64_M5 = "/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAQABAADASIAAhEBAxEB/8QAHAABAQEAAwEBAQAAAAAAAAAAAAECBgcIAwUE/8QASBABAAIBAgMDBwkGBQIEBwEAAAECAwQFBgcREiExFyI1QVFhchMyUlRxgZGS0QgUQqGxwRUjYuHwY4IkMzSDFjdDRVWT8aL/xAAcAQEBAAIDAQEAAAAAAAAAAAAAAgEGBAUHAwj/xAA7EQEAAQMBAwgHBwQDAQEAAAAAAQIDBAUGEXESFSExNEFRUhMyU5GhsdEUFiIjYYHBB0Lh8CQzYnJD/9oADAMBAAIRAxEAPwDxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH//2Q=="
-st.markdown(f"""
-<div style='background:linear-gradient(135deg,#004a6e 0%,#007cab 60%,#00c0ff 100%);
-     border-radius:16px;padding:24px 32px;margin-bottom:24px;position:relative;overflow:hidden;'>
-  <div style='position:absolute;top:-40px;right:-40px;width:140px;height:140px;
-       border-radius:50%;background:rgba(255,255,255,0.05);'></div>
-  <div style='display:flex;align-items:center;gap:18px;margin-bottom:10px;'>
-    <img src="data:image/png;base64,{LOGO_B64_M5}"
-         style='width:52px;height:52px;border-radius:10px;mix-blend-mode:lighten;flex-shrink:0;'>
-    <div>
-      <div style='font-size:0.70rem;font-weight:700;letter-spacing:0.13em;
-           color:#00c0ff;text-transform:uppercase;margin-bottom:4px;'>
-        Tu operación activada
+
+# ── INDICADOR DE VERSIÓN ACTIVA ───────────────────────────────────────────────
+def _badge_version(fuente: str, raw_bytes: bytes, n_total: int, n_e164: int) -> None:
+    """Muestra el banner de versión del archivo cargado con semáforo de antigüedad."""
+    import hashlib
+    from datetime import datetime, timezone
+
+    # Intentar leer fecha de modificación del archivo en disco; si viene de uploader no aplica
+    fecha_mod_str = "—"
+    dias_desde_mod = 0
+    ruta_disco = CSV_AUTO if (archivo is None and tiene_auto) else None
+
+    if ruta_disco and os.path.exists(ruta_disco):
+        ts = os.path.getmtime(ruta_disco)
+        fecha_mod = datetime.fromtimestamp(ts)
+        dias_desde_mod = (datetime.now() - fecha_mod).days
+        fecha_mod_str = fecha_mod.strftime("%d %b %Y · %H:%M")
+    elif archivo is not None:
+        # Si viene de uploader no tenemos fecha de disco; usamos "subido ahora"
+        dias_desde_mod = 0
+        fecha_mod_str = "Subido en esta sesión"
+
+    if dias_desde_mod <= 6:
+        badge_color, badge_emoji, badge_txt = "#16a34a", "🟢", "Datos recientes"
+    elif dias_desde_mod <= 14:
+        badge_color, badge_emoji, badge_txt = "#d97706", "🟡", f"Datos de hace {dias_desde_mod} días"
+    else:
+        badge_color, badge_emoji, badge_txt = "#dc2626", "🔴", f"Datos de hace {dias_desde_mod} días — actualizar"
+
+    n_sin_cel = n_total - n_e164
+
+    st.markdown(f"""
+    <div style='background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;
+         padding:12px 20px;margin-bottom:16px;display:flex;align-items:center;
+         gap:24px;flex-wrap:wrap;'>
+      <div style='display:flex;align-items:center;gap:8px;'>
+        <span style='font-size:1.1rem;'>{badge_emoji}</span>
+        <span style='font-size:0.82rem;font-weight:700;color:{badge_color};'>{badge_txt}</span>
       </div>
-      <div style='font-size:1.45rem;font-weight:800;color:#ffffff;line-height:1.2;'>
-        ¿A quién le mando el mensaje?
+      <div style='font-size:0.80rem;color:#475569;'>
+        📂 <strong>{fuente}</strong>
+      </div>
+      <div style='font-size:0.80rem;color:#475569;'>
+        🕐 {fecha_mod_str}
+      </div>
+      <div style='font-size:0.80rem;color:#475569;'>
+        👥 <strong>{n_total:,}</strong> registros totales
+      </div>
+      <div style='font-size:0.80rem;color:#475569;'>
+        📱 <strong>{n_e164:,}</strong> con celular válido
+        <span style='color:#94a3b8;'> · {n_sin_cel:,} sin celular</span>
       </div>
     </div>
-  </div>
-  <div style='color:rgba(255,255,255,0.70);font-size:0.88rem;margin-left:70px;'>
-    Base de contactos segmentada · El mensaje correcto, a la persona correcta · JCLY Morena 2026
-  </div>
-</div>
-""", unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
+
+    # Advertencia si datos viejos — no bloquea Tab 3 pero exige confirmación explícita
+    if dias_desde_mod > 14:
+        st.markdown(
+            "<div class='alert-red'>🔴 <strong>Archivo desactualizado.</strong> "
+            "El operativo tiene más de 15 días. Sube el CSV más reciente antes de "
+            "lanzar una campaña SMS para evitar contactar con datos obsoletos.</div>",
+            unsafe_allow_html=True,
+        )
+
+
+_n_e164 = int(df_raw["celular_e164"].notna().sum()) if "celular_e164" in df_raw.columns else int(df_raw["tiene_cel"].sum())
+_badge_version(fuente_label, raw_bytes, len(df_raw), _n_e164)
+
 
 # ── 3 TARJETAS ────────────────────────────────────────────────────────────────
 c1, c2, c3 = st.columns(3)
@@ -751,10 +924,115 @@ for i, (seg, color) in enumerate(COLORES_SEGMENTO.items()):
 
 st.markdown("<br>", unsafe_allow_html=True)
 
+# ── RUTAS DE ARCHIVOS ─────────────────────────────────────────────────────────
+_SCRIPT_DIR      = os.path.dirname(os.path.abspath(__file__))
+PROPUESTAS_PATH  = os.path.normpath(os.path.join(_SCRIPT_DIR, "..", "data", "m5_propuestas.csv"))
+CAMPANAS_PATH    = os.path.normpath(os.path.join(_SCRIPT_DIR, "..", "data", "m5_campanas_ejecutadas.csv"))
+
+# ── ESQUEMA PROPUESTAS ────────────────────────────────────────────────────────
+_PROP_COLS = [
+    "fecha", "usuario", "rol", "segmento", "secciones", "tema", "tipo_tema", "mensaje",
+]
+
+_PROP_KEY = "m5_propuestas_rows"   # session_state key
+
+# ── ESQUEMA CAMPAÑAS EJECUTADAS ───────────────────────────────────────────────
+_CAMP_COLS = [
+    "fecha", "segmento", "tema", "tipo_tema", "mensaje",
+    "total_destinatarios", "enviados", "fallidos", "tasa_entrega",
+    "label", "notas",
+]
+
+
+def _guardar_propuesta(row: dict) -> bool:
+    """Persiste una propuesta en disco y en session_state.
+    Retorna True si tuvo éxito en disco, False si solo quedó en memoria.
+    """
+    import csv
+    if _PROP_KEY not in st.session_state:
+        st.session_state[_PROP_KEY] = []
+    st.session_state[_PROP_KEY].append({k: row.get(k, "") for k in _PROP_COLS})
+
+    try:
+        os.makedirs(os.path.dirname(PROPUESTAS_PATH), exist_ok=True)
+        existe = os.path.exists(PROPUESTAS_PATH)
+        with open(PROPUESTAS_PATH, "a", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=_PROP_COLS)
+            if not existe:
+                writer.writeheader()
+            writer.writerow({k: row.get(k, "") for k in _PROP_COLS})
+        return True
+    except Exception:
+        return False
+
+
+def _cargar_propuestas() -> pd.DataFrame:
+    """Combina session_state + disco. Deduplica por (fecha + mensaje)."""
+    rows_sesion = st.session_state.get(_PROP_KEY, [])
+    df_sesion = pd.DataFrame(rows_sesion, columns=_PROP_COLS) if rows_sesion else pd.DataFrame(columns=_PROP_COLS)
+
+    df_disco = pd.DataFrame(columns=_PROP_COLS)
+    if os.path.exists(PROPUESTAS_PATH):
+        try:
+            df_disco = pd.read_csv(PROPUESTAS_PATH)
+        except Exception:
+            pass
+
+    df = pd.concat([df_disco, df_sesion], ignore_index=True)
+    if df.empty:
+        return df
+    df["fecha"] = pd.to_datetime(df["fecha"], errors="coerce")
+    df = df.drop_duplicates(subset=["fecha", "mensaje"], keep="last")
+    return df.sort_values("fecha", ascending=False).reset_index(drop=True)
+
+
+def _parsear_campanas(df: pd.DataFrame) -> pd.DataFrame:
+    """Normaliza tipos de un DataFrame de campañas."""
+    df["fecha"] = pd.to_datetime(df["fecha"], errors="coerce")
+    for col in ["total_destinatarios", "enviados", "fallidos"]:
+        df[col] = pd.to_numeric(df.get(col, 0), errors="coerce").fillna(0).astype(int)
+    df["tasa_entrega"] = pd.to_numeric(df.get("tasa_entrega", 0), errors="coerce").fillna(0)
+    for col in ["nombre_campana", "segmento", "tema", "label"]:
+        if col in df.columns:
+            df[col] = df[col].astype(str).replace("nan", "").fillna("")
+    if "label" in df.columns:
+        df = df.drop_duplicates(subset=["label"], keep="last")
+    return df.sort_values("fecha", ascending=False).reset_index(drop=True)
+
+
+def _persistir_campanas(df: pd.DataFrame) -> None:
+    """Guarda en session_state y, si es posible, en disco."""
+    df = _parsear_campanas(df)
+    st.session_state["df_campanas"] = df
+    try:
+        os.makedirs(os.path.dirname(CAMPANAS_PATH), exist_ok=True)
+        df.to_csv(CAMPANAS_PATH, index=False, encoding="utf-8-sig")
+    except Exception:
+        pass  # En Cloud no siempre hay escritura; session_state basta
+
+
+def _cargar_campanas() -> pd.DataFrame:
+    """session_state es la fuente de verdad; disco es respaldo inicial."""
+    if "df_campanas" in st.session_state and not st.session_state["df_campanas"].empty:
+        return st.session_state["df_campanas"].copy()
+    if os.path.exists(CAMPANAS_PATH):
+        try:
+            df = pd.read_csv(CAMPANAS_PATH)
+            df = _parsear_campanas(df)
+            st.session_state["df_campanas"] = df
+            return df
+        except Exception:
+            pass
+    return pd.DataFrame(columns=_CAMP_COLS)
+
 # ══════════════════════════════════════════════════════════════════════════════
 # TABS
 # ══════════════════════════════════════════════════════════════════════════════
-tab_listas, tab_mensajes = st.tabs(["📋 Listas de contactos", "✉️ Generador de mensajes"])
+tab_listas, tab_mensajes, tab_resultados = st.tabs([
+    "📋 Listas de contactos",
+    "✉️ Ideas de mensajes",
+    "📊 Resultados",
+])
 
 
 # ────────────────────────────────────────────────────────────────────────────
@@ -800,46 +1078,74 @@ with tab_listas:
         )
 
         st.markdown("---")
-        col_chk, col_btn = st.columns([2, 1])
-        with col_chk:
-            incluir_msg = st.checkbox(
-                "Incluir 'Mensaje sugerido' en la exportación",
-                value=False,
-                help="Genera los mensajes en el Tab Mensajes primero.",
-            )
 
-        df_export = df_f[[
-            "nombre_display", "celular_fmt", "seccion", "localidad_text",
-            "segmento", "prob_grupo",
-            "p2_1_autobinding_option_p2_1_texto",
-            "semana", "p15_3_texto_text", "atribs_debiles", "gps_link",
-        ]].copy()
-        df_export.columns = [
-            "nombre", "celular", "seccion", "localidad",
-            "segmento", "problema_grupo", "problema_detalle",
-            "semana_contacto", "es_buen_candidato",
-            "atributos_a_reforzar", "gps_link",
-        ]
+        if puede("puede_exportar"):
+            col_chk, col_btn = st.columns([2, 1])
+            with col_chk:
+                incluir_msg = st.checkbox(
+                    "Incluir mensaje sugerido en OTROS 3",
+                    value=False,
+                    help="Genera los mensajes en el Tab Mensajes primero. "
+                         "Si está activo, el mensaje sugerido reemplaza la problemática en OTROS 3.",
+                )
 
-        if incluir_msg and "mensajes_generados" in st.session_state:
-            df_export["mensaje_sugerido"] = df_f["segmento"].map(
-                st.session_state["mensajes_generados"]
-            )
+            # ── Helpers exportación LabsMobile ────────────────────────────
+            def _primer_nombre(nombre: str) -> str:
+                """Extrae solo el primer token antes del primer espacio."""
+                s = str(nombre).strip()
+                if s.lower() in ["", "nan", "sin nombre"]:
+                    return ""
+                return s.split()[0]
 
-        csv_bytes      = df_export.to_csv(index=False).encode("utf-8-sig")
-        fecha_hoy      = datetime.today().strftime("%Y%m%d")
-        seg_tag        = seg_sel.replace(" ", "_").lower() if seg_sel != "Todos los segmentos" else "todos"
-        sec_tag        = sec_sel if sec_sel != "Todas las secciones" else "todas"
-        nombre_archivo = f"contactos_m5_{seg_tag}_sec{sec_tag}_{fecha_hoy}.csv"
+            # Solo contactos con celular E.164 válido
+            df_export_base = df_f[df_f["celular_e164"].notna()].copy()
+            n_con_cel_export = len(df_export_base)
 
-        with col_btn:
-            st.download_button(
-                label=f"⬇️ Exportar {total_filtro:,} contactos",
-                data=csv_bytes,
-                file_name=nombre_archivo,
-                mime="text/csv",
-                use_container_width=True,
-            )
+            # Formato LabsMobile: NOMBRE | TELÉFONO | OTROS 1 | OTROS 2 | OTROS 3
+            df_labsmobile = pd.DataFrame({
+                "NOMBRE":   df_export_base["nombre_display"].apply(_primer_nombre),
+                "TELÉFONO": df_export_base["celular_e164"],
+                "OTROS 1":  df_export_base["segmento"],
+                "OTROS 2":  df_export_base["localidad_text"].fillna(""),
+                "OTROS 3":  df_export_base["prob_grupo"].fillna(""),
+            })
+
+            if incluir_msg and "mensajes_generados" in st.session_state:
+                df_labsmobile["OTROS 3"] = df_export_base["segmento"].map(
+                    st.session_state["mensajes_generados"]
+                ).fillna(df_labsmobile["OTROS 3"])
+
+            csv_bytes      = df_labsmobile.to_csv(index=False).encode("utf-8-sig")
+            fecha_hoy      = datetime.today().strftime("%Y%m%d")
+            seg_tag        = seg_sel.replace(" ", "_").lower() if seg_sel != "Todos los segmentos" else "todos"
+            sec_tag        = sec_sel if sec_sel != "Todas las secciones" else "todas"
+            nombre_archivo = f"labsmobile_{seg_tag}_sec{sec_tag}_{fecha_hoy}.csv"
+
+            if n_con_cel_export < total_filtro:
+                st.markdown(
+                    f"<div class='alert-warn'>⚠️ Se exportarán <strong>{n_con_cel_export:,}</strong> "
+                    f"contactos con celular válido. Se omiten {total_filtro - n_con_cel_export:,} sin celular.</div>",
+                    unsafe_allow_html=True,
+                )
+
+            with col_btn:
+                st.download_button(
+                    label=f"⬇️ Exportar {n_con_cel_export:,} → LabsMobile",
+                    data=csv_bytes,
+                    file_name=nombre_archivo,
+                    mime="text/csv",
+                    use_container_width=True,
+                )
+        else:
+            st.markdown("""
+            <div style="background:#f1f5f9;border:1px solid #cbd5e1;border-radius:8px;
+                        padding:12px 16px;display:flex;align-items:center;gap:10px;">
+                <span style="font-size:1.1rem;">🔒</span>
+                <span style="font-size:0.85rem;color:#475569;">
+                    La exportación de contactos está disponible para coordinadores y técnicos.
+                </span>
+            </div>
+            """, unsafe_allow_html=True)
 
 
 # ────────────────────────────────────────────────────────────────────────────
@@ -1002,14 +1308,72 @@ with tab_mensajes:
             )
 
         enfasis_input = st.text_input(
-            "🎯 Énfasis adicional (opcional)",
+            "🎯 Instrucción dominante de redacción (opcional)",
             placeholder=(
-                "Ej: evento del sábado en la plaza, jornada de agua, "
-                "reunión comunitaria este viernes…"
+                "Ej: 'Invitación al evento del 10 de mayo, 7pm Plaza Principal' · "
+                "'Mensaje de agradecimiento por apoyo en la jornada del sábado' · "
+                "'Anuncio de jornada de agua gratuita este viernes en la colonia'…"
             ),
             key=f"enfasis_{key_w}",
-            help="Si lo dejas vacío, el LLM ancla el mensaje en el problema principal del grupo.",
+            help=(
+                "Si escribes aquí, este texto se convierte en el eje principal del mensaje. "
+                "El perfil del grupo y su problemática quedan como contexto de apoyo. "
+                "Si lo dejas vacío, el LLM ancla el mensaje en el problema principal del grupo."
+            ),
         )
+
+        # ── Selector de tema de campaña ──────────────────────────────────────
+        st.markdown("---")
+        st.markdown(
+            "<div class='section-hdr'>🏷️ Tema de campaña</div>",
+            unsafe_allow_html=True,
+        )
+        st.caption(
+            "Etiqueta el tema antes de generar. Se registra en el log y permite "
+            "medir el mix Problemática vs Posicionamiento en Tab 4."
+        )
+
+        col_t1, col_t2 = st.columns([3, 2])
+        with col_t1:
+            # Selector agrupado: primero elige el grupo
+            grupo_tema = st.radio(
+                "Categoría",
+                options=list(TEMAS_CAMPAÑA.keys()) + ["Otro"],
+                horizontal=True,
+                key=f"grupo_tema_{key_w}",
+            )
+
+        with col_t2:
+            if grupo_tema == "Otro":
+                tema_sel   = st.text_input(
+                    "Especifica el tema",
+                    placeholder="Ej: Feria del municipio, Día del campo…",
+                    key=f"tema_otro_{key_w}",
+                )
+                tipo_tema_sel = "Otro"
+            else:
+                tema_sel = st.selectbox(
+                    "Tema específico",
+                    options=TEMAS_CAMPAÑA[grupo_tema],
+                    key=f"tema_sel_{key_w}",
+                )
+                tipo_tema_sel = TIPO_TEMA.get(tema_sel, "Otro")
+
+        # Guardar en session_state para que Tab 3 lo herede
+        st.session_state[f"tema_{key_w}"]      = tema_sel
+        st.session_state[f"tipo_tema_{key_w}"] = tipo_tema_sel
+
+        if tema_sel:
+            color_tipo = "#007cab" if tipo_tema_sel == "Problemática" else "#7c3aed"
+            st.markdown(
+                f"<span style='background:{color_tipo}18;color:{color_tipo};"
+                f"font-size:0.78rem;font-weight:700;padding:3px 10px;"
+                f"border-radius:20px;border:1px solid {color_tipo}40;'>"
+                f"{tipo_tema_sel} · {tema_sel}</span>",
+                unsafe_allow_html=True,
+            )
+
+        st.markdown("---")
 
         # ── Botón de generación ──────────────────────────────────────────────
         if st.button("⚡ Generar 3 variantes", type="primary",
@@ -1082,19 +1446,28 @@ with tab_mensajes:
 
             # ── Confirmación y métricas ──────────────────────────────────────
             if variante_conf:
-                # Edición manual post-selección
+                # Edición manual post-selección — límite 135 para dejar espacio al saludo
+                SMS_CUERPO_MAX = 135
+                st.markdown(
+                    "<div style='background:#fffbeb;border:1px solid #fcd34d;"
+                    "border-radius:8px;padding:8px 14px;margin-bottom:8px;font-size:0.80rem;'>"
+                    "👤 <strong>Personalización activa:</strong> el SMS se enviará como "
+                    "<code>Hola [nombre],</code> + este texto (~25 chars reservados para el saludo). "
+                    "Límite del cuerpo: <strong>135 caracteres</strong>.</div>",
+                    unsafe_allow_html=True,
+                )
                 msg_edit = st.text_area(
-                    "✏️ Edita el mensaje seleccionado antes de exportar (máx. 160 caracteres)",
-                    value=variante_conf,
+                    f"✏️ Edita el mensaje (máx. {SMS_CUERPO_MAX} caracteres · saludo personalizado se agrega al enviar)",
+                    value=variante_conf[:SMS_CUERPO_MAX],
                     height=100,
-                    max_chars=160,
+                    max_chars=SMS_CUERPO_MAX,
                     key=f"edit_{key_w}",
                 )
-                chars_rest = 160 - len(msg_edit)
+                chars_rest = SMS_CUERPO_MAX - len(msg_edit)
                 col_c      = "#16a34a" if chars_rest >= 0 else "#dc2626"
                 st.markdown(
                     f"<span style='color:{col_c};font-size:0.8rem;'>"
-                    f"{'✅' if chars_rest >= 0 else '❌'} {len(msg_edit)}/160 caracteres "
+                    f"{'✅' if chars_rest >= 0 else '❌'} {len(msg_edit)}/{SMS_CUERPO_MAX} caracteres "
                     f"({'quedan' if chars_rest >= 0 else 'excede por'} {abs(chars_rest)})"
                     f"</span>",
                     unsafe_allow_html=True,
@@ -1112,8 +1485,356 @@ with tab_mensajes:
                 with cc:
                     st.metric("Problema cubierto", perfil["prob_top"])
 
-                st.info(
-                    "💾 Variante guardada. Ve al **Tab Listas** y activa "
-                    "*'Incluir Mensaje sugerido en la exportación'* "
-                    "para que el CSV incluya este texto para cada contacto."
-                )
+
+
+# ────────────────────────────────────────────────────────────────────────────
+# TAB 3 — RESULTADOS
+# ────────────────────────────────────────────────────────────────────────────
+with tab_resultados:
+
+    df_camp      = _cargar_campanas()
+    _es_tecnico  = puede("puede_enviar_sms")
+
+    st.markdown("<div class='section-hdr'>🚀 Campañas ejecutadas</div>",
+                unsafe_allow_html=True)
+
+    # Solo el técnico puede subir el CSV de campañas
+    if _es_tecnico:
+        with st.expander("📤 Cargar resultados de campaña ejecutada", expanded=False):
+            st.caption(
+                "Sube el archivo exportado desde LabsMobile (xlsx o csv). "
+                "Formato: sin encabezado · 9 columnas · id · cuenta · número · texto · "
+                "fecha_envio · costo · estado · fecha_estado · flag"
+            )
+            _nombre_camp = st.text_input(
+                "Nombre de la campaña",
+                placeholder="Ej: Primer contacto Sec.2486 · 24 Abr",
+                help="Este nombre identifica la campaña en el historial. "
+                     "Si lo dejas vacío se usará la fecha del envío.",
+                key="nombre_camp_input",
+            )
+            _f_camp = st.file_uploader(
+                "Archivo de LabsMobile",
+                type=["csv", "xlsx"],
+                key="uploader_campanas",
+                label_visibility="collapsed",
+            )
+            # Evitar loop: marcar el archivo como procesado por nombre+tamaño
+            _camp_file_id = f"{_f_camp.name}_{_f_camp.size}" if _f_camp is not None else None
+            _ya_procesado = st.session_state.get("_camp_file_procesado") == _camp_file_id
+
+            if _f_camp is not None and not _ya_procesado:
+                try:
+                    # ── Leer según extensión ──────────────────────────────
+                    _fname = _f_camp.name.lower()
+                    _ENTREGADOS = {
+                        "aprobado", "entregado", "delivered",
+                        "leído", "leido", "read", "sent", "enviado",
+                    }
+
+                    if _fname.endswith(".xlsx"):
+                        # Formato LabsMobile real: xlsx, sin header, 9 cols
+                        _LM_COLS_9 = [
+                            "id_mensaje", "cuenta", "numero", "texto",
+                            "fecha_envio", "costo", "estado", "fecha_estado", "flag",
+                        ]
+                        _df_lm = pd.read_excel(
+                            _f_camp, header=None,
+                            names=_LM_COLS_9,
+                            dtype=str,
+                        )
+                        _df_lm["label"] = ""   # sin label en este formato
+                        _es_labsmobile = True
+
+                    else:
+                        # CSV LabsMobile — puede tener formato malformado con comillas dobles
+                        _raw_txt = _f_camp.read().decode("utf-8-sig", errors="replace")
+                        _primera = _raw_txt.split("\n")[0]
+                        _tiene_header = "fecha" in _primera.lower() or "segmento" in _primera.lower()
+
+                        if _tiene_header:
+                            _sep = ";" if _primera.count(";") > _primera.count(",") else ","
+                            _df_nuevo = pd.read_csv(io.StringIO(_raw_txt), sep=_sep)
+                            _es_labsmobile = False
+                        else:
+                            # Parser robusto para CSV LabsMobile con comillas escapadas
+                            import re as _re
+                            _LM_COLS_9 = [
+                                "id_mensaje", "cuenta", "numero", "texto",
+                                "fecha_envio", "costo", "estado", "fecha_estado", "flag",
+                            ]
+                            def _parse_lm_csv(raw):
+                                _rows = []
+                                for _line in raw.splitlines():
+                                    _line = _line.strip()
+                                    if not _line:
+                                        continue
+                                    _line = _line.lstrip('"')
+                                    _parts = _re.split(r';""|;"', _line)
+                                    _parts = [p.strip('"').replace('""', '"') for p in _parts]
+                                    # Limpiar artefacto de coma en mensaje: '"," texto'
+                                    if len(_parts) >= 4:
+                                        _parts[3] = _parts[3].replace('",\"', ' ').replace('\"', '').strip()
+                                    _rows.append(_parts)
+                                _max = max(len(r) for r in _rows) if _rows else 9
+                                _rows = [r + [""] * (_max - len(r)) for r in _rows]
+                                _cols = _LM_COLS_9[:_max] if _max <= 9 else _LM_COLS_9
+                                return pd.DataFrame(_rows, columns=_cols[:_max])
+
+                            _df_lm = _parse_lm_csv(_raw_txt)
+                            _df_lm["label"] = ""
+                            _es_labsmobile = True
+
+                    if _es_labsmobile:
+                        # ── Parsear y agrupar ─────────────────────────────
+                        _df_lm["_ok"] = _df_lm["estado"].str.lower().str.strip().isin(_ENTREGADOS)
+                        _df_lm["fecha_envio"] = pd.to_datetime(_df_lm["fecha_envio"], errors="coerce")
+
+                        # Clave de agrupación: nombre manual → label del archivo → fecha
+                        _nombre_manual = _nombre_camp.strip() if _nombre_camp.strip() else ""
+                        if _nombre_manual:
+                            _df_lm["_camp_key"] = _nombre_manual
+                        elif "label" in _df_lm.columns and (_df_lm["label"].str.strip() != "").any():
+                            _df_lm["_camp_key"] = _df_lm["label"].where(
+                                _df_lm["label"].str.strip() != "",
+                                _df_lm["fecha_envio"].dt.strftime("%Y%m%d_%H%M"),
+                            )
+                        else:
+                            _df_lm["_camp_key"] = _df_lm["fecha_envio"].dt.strftime("%Y%m%d_%H%M")
+
+                        _resumen = (
+                            _df_lm.groupby("_camp_key")
+                            .agg(
+                                fecha=("fecha_envio", "min"),
+                                total_destinatarios=("numero", "count"),
+                                enviados=("_ok", "sum"),
+                                mensaje=("texto", "first"),
+                            )
+                            .reset_index()
+                            .rename(columns={"_camp_key": "label"})
+                        )
+                        _resumen["fallidos"] = _resumen["total_destinatarios"] - _resumen["enviados"]
+                        _resumen["tasa_entrega"] = (
+                            _resumen["enviados"] / _resumen["total_destinatarios"] * 100
+                        ).round(1)
+                        _resumen["segmento"] = ""
+                        _resumen["tema"] = ""
+                        _resumen["tipo_tema"] = ""
+                        _resumen["notas"] = "Importado desde LabsMobile"
+                        _df_nuevo = _resumen[[
+                            "fecha", "segmento", "tema", "tipo_tema", "mensaje",
+                            "total_destinatarios", "enviados", "fallidos",
+                            "tasa_entrega", "label", "notas",
+                        ]]
+
+                        # Preview con desglose de estados reales
+                        st.markdown("**Vista previa:**")
+                        _prev = _df_nuevo[[
+                            "label", "total_destinatarios", "enviados", "fallidos", "tasa_entrega"
+                        ]].copy()
+                        _prev.columns = ["Nombre campaña", "Total", "Entregados", "Fallidos", "Tasa %"]
+                        st.dataframe(_prev, hide_index=True, use_container_width=True)
+                        # Mostrar estados únicos detectados para diagnóstico
+                        _estados_raw = _df_lm["estado"].str.strip().value_counts()
+                        _estados_str = " · ".join([f"{v} {k}" for k, v in _estados_raw.items()])
+                        st.caption(f"Estados detectados en el archivo: {_estados_str}")
+
+                    # ── Guardar (session_state + disco si es posible) ─────
+                    _n_guardadas = len(_df_nuevo)
+                    _df_exist = _cargar_campanas()
+                    if not _df_exist.empty:
+                        _df_nuevo = pd.concat([_df_exist, _df_nuevo], ignore_index=True)
+                    _persistir_campanas(_df_nuevo)
+                    st.session_state["_camp_file_procesado"] = _camp_file_id
+                    st.success(f"✅ Resultados cargados: {_n_guardadas} campaña(s).")
+                except Exception as e:
+                    st.error(f"No se pudo procesar el archivo: {e}")
+
+    if df_camp.empty:
+        st.markdown(
+            "<div style='background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;"
+            "padding:24px;text-align:center;color:#94a3b8;'>"
+            "📭 Aún no hay campañas registradas. "
+            "Sube el archivo de LabsMobile para ver los resultados."
+            "</div>",
+            unsafe_allow_html=True,
+        )
+    else:
+        _total_env   = int(df_camp["enviados"].sum())
+        _total_fall  = int(df_camp["fallidos"].sum())
+        _total_int   = _total_env + _total_fall
+        _tasa_global = _total_env / _total_int * 100 if _total_int > 0 else 0
+        _n_campanas  = int(df_camp["label"].nunique()) if "label" in df_camp.columns else len(df_camp)
+
+        _col_tasa = "green" if _tasa_global >= 90 else "orange"
+        c1, c2, c3 = st.columns(3)
+        with c1:
+            st.markdown(
+                f"<div class='metric-card'><div class='metric-val'>{_n_campanas}</div>"
+                "<div class='metric-lbl'>Campañas enviadas</div></div>",
+                unsafe_allow_html=True,
+            )
+        with c2:
+            st.markdown(
+                f"<div class='metric-card green'><div class='metric-val'>{_total_env:,}</div>"
+                "<div class='metric-lbl'>SMS entregados · acumulado</div></div>",
+                unsafe_allow_html=True,
+            )
+        with c3:
+            st.markdown(
+                f"<div class='metric-card {_col_tasa}'><div class='metric-val'>{_tasa_global:.1f}%</div>"
+                "<div class='metric-lbl'>Tasa de entrega global</div></div>",
+                unsafe_allow_html=True,
+            )
+
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("<div class='section-hdr'>Historial de campañas</div>", unsafe_allow_html=True)
+
+        _hist = (
+            df_camp.groupby("label")
+            .agg(
+                fecha=("fecha", "min"),
+                enviados=("enviados", "sum"),
+                fallidos=("fallidos", "sum"),
+                total=("total_destinatarios", "sum"),
+                mensaje=("mensaje", "first"),
+            )
+            .reset_index()
+            .sort_values("fecha", ascending=False)
+        )
+        _hist["tasa"] = (_hist["enviados"] / _hist["total"] * 100).round(1).fillna(0)
+        _hist["fecha_fmt"] = pd.to_datetime(_hist["fecha"]).dt.strftime("%d %b %Y %H:%M")
+
+        # ── helper: guardar edición de nombre/segmento/tema en CSV ─────
+        def _guardar_edicion_campana(label_key, nombre, segmento, tema):
+            try:
+                _df_edit = _cargar_campanas()
+                if _df_edit.empty:
+                    return False, "No hay campañas en memoria"
+                mask = _df_edit["label"] == label_key
+                if not mask.any():
+                    return False, f"Label '{label_key}' no encontrado"
+                if "nombre_campana" not in _df_edit.columns:
+                    _df_edit["nombre_campana"] = ""
+                _df_edit["nombre_campana"] = _df_edit["nombre_campana"].astype(str).replace("nan", "")
+                _df_edit["segmento"]        = _df_edit["segmento"].astype(str).replace("nan", "")
+                _df_edit["tema"]            = _df_edit["tema"].astype(str).replace("nan", "")
+                _df_edit.loc[mask, "nombre_campana"] = nombre
+                _df_edit.loc[mask, "segmento"]       = segmento
+                _df_edit.loc[mask, "tema"]            = tema
+                _persistir_campanas(_df_edit)
+                return True, None
+            except Exception as _ex:
+                return False, str(_ex)
+
+        for _, _r in _hist.iterrows():
+            _tc = "#16a34a" if _r["tasa"] >= 90 else "#d97706"
+            _msg = str(_r["mensaje"])
+            _msg_prev = _msg[:90] + "…" if len(_msg) > 90 else _msg
+            _label_key = str(_r["label"])
+
+            # Leer valores guardados (nombre_campana puede no existir en CSV viejo)
+            _nombre_actual   = str(df_camp.loc[df_camp["label"] == _label_key, "nombre_campana"].values[0]) if "nombre_campana" in df_camp.columns and len(df_camp.loc[df_camp["label"] == _label_key]) > 0 else ""
+            _segmento_actual = str(df_camp.loc[df_camp["label"] == _label_key, "segmento"].values[0]) if len(df_camp.loc[df_camp["label"] == _label_key]) > 0 else ""
+            _tema_actual     = str(df_camp.loc[df_camp["label"] == _label_key, "tema"].values[0]) if len(df_camp.loc[df_camp["label"] == _label_key]) > 0 else ""
+            _nombre_actual   = "" if _nombre_actual in ("nan", "None") else _nombre_actual
+            _segmento_actual = "" if _segmento_actual in ("nan", "None") else _segmento_actual
+            _tema_actual     = "" if _tema_actual in ("nan", "None") else _tema_actual
+
+            # Título mostrado: nombre si existe, si no label
+            _titulo_display = _nombre_actual if _nombre_actual else _label_key
+            _subtitulo = " · ".join(filter(None, [_segmento_actual, _tema_actual]))
+
+            st.markdown(
+                f"<div style='border:1px solid #e2e8f0;border-radius:10px;padding:14px 20px;"
+                f"margin-bottom:4px;background:#ffffff;'>"
+                f"<div style='display:flex;justify-content:space-between;align-items:flex-start;"
+                f"flex-wrap:wrap;gap:8px;'>"
+                f"<div><div style='font-size:0.95rem;font-weight:700;color:#1e293b;'>{_titulo_display}</div>"
+                f"<div style='font-size:0.75rem;color:#94a3b8;margin-top:1px;'>🔑 {_label_key} · 📅 {_r['fecha_fmt']}"
+                f"{(' · ' + _subtitulo) if _subtitulo else ''}</div></div>"
+                f"<div style='display:flex;gap:20px;align-items:center;flex-wrap:wrap;'>"
+                f"<div style='text-align:center;'>"
+                f"<div style='font-size:1.2rem;font-weight:800;color:#1e293b;'>{int(_r['enviados']):,}</div>"
+                f"<div style='font-size:0.72rem;color:#64748b;'>enviados</div></div>"
+                f"<div style='text-align:center;'>"
+                f"<div style='font-size:1.2rem;font-weight:800;color:#dc2626;'>{int(_r['fallidos']):,}</div>"
+                f"<div style='font-size:0.72rem;color:#64748b;'>fallidos</div></div>"
+                f"<div style='text-align:center;'>"
+                f"<div style='font-size:1.2rem;font-weight:800;color:{_tc};'>{_r['tasa']:.1f}%</div>"
+                f"<div style='font-size:0.72rem;color:#64748b;'>entrega</div></div></div></div>"
+                f"<div style='margin-top:10px;padding-top:10px;border-top:1px solid #f1f5f9;"
+                f"font-size:0.80rem;color:#475569;font-style:italic;'>💬 {_msg_prev}</div></div>",
+                unsafe_allow_html=True,
+            )
+
+            # Editor inline (expander colapsado)
+            with st.expander("✏️ Editar nombre, segmento y tema", expanded=False):
+                _ec1, _ec2, _ec3 = st.columns([2, 1, 1])
+                with _ec1:
+                    _inp_nombre = st.text_input(
+                        "Nombre de campaña",
+                        value=_nombre_actual,
+                        placeholder="Ej: Semana 1-2 Primer contacto",
+                        key=f"edit_nombre_{_label_key}",
+                        label_visibility="collapsed",
+                    )
+                with _ec2:
+                    _inp_seg = st.text_input(
+                        "Segmento",
+                        value=_segmento_actual,
+                        placeholder="Ej: Persuadibles",
+                        key=f"edit_seg_{_label_key}",
+                        label_visibility="collapsed",
+                    )
+                with _ec3:
+                    _inp_tema = st.text_input(
+                        "Tema",
+                        value=_tema_actual,
+                        placeholder="Ej: Seguridad",
+                        key=f"edit_tema_{_label_key}",
+                        label_visibility="collapsed",
+                    )
+                _btn_col, _del_col = st.columns([3, 1])
+                with _btn_col:
+                    if st.button("💾 Guardar", key=f"btn_edit_{_label_key}", type="primary", use_container_width=True):
+                        _ok, _err = _guardar_edicion_campana(_label_key, _inp_nombre, _inp_seg, _inp_tema)
+                        if _ok:
+                            st.success("✅ Guardado")
+                            st.rerun()
+                        else:
+                            st.error(f"No se pudo guardar: {_err}")
+                with _del_col:
+                    if _es_tecnico:
+                        _confirm_key = f"confirm_del_{_label_key}"
+                        if not st.session_state.get(_confirm_key):
+                            if st.button("🗑️ Eliminar", key=f"btn_del_{_label_key}",
+                                         use_container_width=True):
+                                st.session_state[_confirm_key] = True
+                                st.rerun()
+                        else:
+                            st.warning("¿Confirmar eliminación?")
+                            _ca, _cb = st.columns(2)
+                            with _ca:
+                                if st.button("Sí, eliminar", key=f"btn_del_ok_{_label_key}",
+                                             type="primary", use_container_width=True):
+                                    _df_edit = _cargar_campanas()
+                                    _df_edit = _df_edit[_df_edit["label"] != _label_key]
+                                    _persistir_campanas(_df_edit)
+                                    st.session_state.pop(_confirm_key, None)
+                                    st.rerun()
+                            with _cb:
+                                if st.button("Cancelar", key=f"btn_del_no_{_label_key}",
+                                             use_container_width=True):
+                                    st.session_state.pop(_confirm_key, None)
+                                    st.rerun()
+
+        if _es_tecnico:
+            st.markdown("<br>", unsafe_allow_html=True)
+            _csv_camp = df_camp.drop_duplicates(subset=["label"], keep="last").to_csv(index=False).encode("utf-8-sig")
+            st.download_button(
+                label="⬇️ Exportar historial",
+                data=_csv_camp,
+                file_name=f"m5_campanas_{datetime.today().strftime('%Y%m%d')}.csv",
+                mime="text/csv",
+            )
