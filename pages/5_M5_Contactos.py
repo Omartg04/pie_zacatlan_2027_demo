@@ -1770,64 +1770,64 @@ with tab_resultados:
 
             # Editor inline — expander visible solo para técnico
             if _es_tecnico:
-              with st.expander("✏️ Editar · Eliminar campaña", expanded=False):
-                _ec1, _ec2, _ec3 = st.columns([2, 1, 1])
-                with _ec1:
-                    _inp_nombre = st.text_input(
-                        "Nombre de campaña",
-                        value=_nombre_actual,
-                        placeholder="Ej: Semana 1-2 Primer contacto",
-                        key=f"edit_nombre_{_label_key}",
-                        label_visibility="collapsed",
-                    )
-                with _ec2:
-                    _inp_seg = st.text_input(
-                        "Segmento",
-                        value=_segmento_actual,
-                        placeholder="Ej: Persuadibles",
-                        key=f"edit_seg_{_label_key}",
-                        label_visibility="collapsed",
-                    )
-                with _ec3:
-                    _inp_tema = st.text_input(
-                        "Tema",
-                        value=_tema_actual,
-                        placeholder="Ej: Seguridad",
-                        key=f"edit_tema_{_label_key}",
-                        label_visibility="collapsed",
-                    )
-                _btn_col, _del_col = st.columns([3, 1])
-                with _btn_col:
-                    if st.button("💾 Guardar", key=f"btn_edit_{_label_key}", type="primary", use_container_width=True):
-                        _ok, _err = _guardar_edicion_campana(_label_key, _inp_nombre, _inp_seg, _inp_tema)
-                        if _ok:
-                            st.success("✅ Guardado")
-                            st.rerun()
-                        else:
-                            st.error(f"No se pudo guardar: {_err}")
-                with _del_col:
-                    _confirm_key = f"confirm_del_{_label_key}"
-                    if not st.session_state.get(_confirm_key):
-                        if st.button("🗑️ Eliminar", key=f"btn_del_{_label_key}",
-                                     use_container_width=True):
-                            st.session_state[_confirm_key] = True
-                            st.rerun()
-                    else:
-                        st.warning("¿Confirmar?")
-                        _ca, _cb = st.columns(2)
-                        with _ca:
-                            if st.button("✅ Sí", key=f"btn_del_ok_{_label_key}",
-                                         type="primary", use_container_width=True):
-                                _df_edit = _cargar_campanas()
-                                _df_edit = _df_edit[_df_edit["label"] != _label_key]
-                                _persistir_campanas(_df_edit)
-                                st.session_state.pop(_confirm_key, None)
+                with st.expander("✏️ Editar · Eliminar campaña", expanded=False):
+                    _ec1, _ec2, _ec3 = st.columns([2, 1, 1])
+                    with _ec1:
+                        _inp_nombre = st.text_input(
+                            "Nombre de campaña",
+                            value=_nombre_actual,
+                            placeholder="Ej: Semana 1-2 Primer contacto",
+                            key=f"edit_nombre_{_label_key}",
+                            label_visibility="collapsed",
+                        )
+                    with _ec2:
+                        _inp_seg = st.text_input(
+                            "Segmento",
+                            value=_segmento_actual,
+                            placeholder="Ej: Persuadibles",
+                            key=f"edit_seg_{_label_key}",
+                            label_visibility="collapsed",
+                        )
+                    with _ec3:
+                        _inp_tema = st.text_input(
+                            "Tema",
+                            value=_tema_actual,
+                            placeholder="Ej: Seguridad",
+                            key=f"edit_tema_{_label_key}",
+                            label_visibility="collapsed",
+                        )
+                    _btn_col, _del_col = st.columns([3, 1])
+                    with _btn_col:
+                        if st.button("💾 Guardar", key=f"btn_edit_{_label_key}", type="primary", use_container_width=True):
+                            _ok, _err = _guardar_edicion_campana(_label_key, _inp_nombre, _inp_seg, _inp_tema)
+                            if _ok:
+                                st.success("✅ Guardado")
                                 st.rerun()
-                        with _cb:
-                            if st.button("❌ No", key=f"btn_del_no_{_label_key}",
+                            else:
+                                st.error(f"No se pudo guardar: {_err}")
+                    with _del_col:
+                        _confirm_key = f"confirm_del_{_label_key}"
+                        if not st.session_state.get(_confirm_key):
+                            if st.button("🗑️ Eliminar", key=f"btn_del_{_label_key}",
                                          use_container_width=True):
-                                st.session_state.pop(_confirm_key, None)
+                                st.session_state[_confirm_key] = True
                                 st.rerun()
+                        else:
+                            st.warning("¿Confirmar?")
+                            _ca, _cb = st.columns(2)
+                            with _ca:
+                                if st.button("✅ Sí", key=f"btn_del_ok_{_label_key}",
+                                             type="primary", use_container_width=True):
+                                    _df_edit = _cargar_campanas()
+                                    _df_edit = _df_edit[_df_edit["label"] != _label_key]
+                                    _persistir_campanas(_df_edit)
+                                    st.session_state.pop(_confirm_key, None)
+                                    st.rerun()
+                            with _cb:
+                                if st.button("❌ No", key=f"btn_del_no_{_label_key}",
+                                             use_container_width=True):
+                                    st.session_state.pop(_confirm_key, None)
+                                    st.rerun()
 
         if _es_tecnico:
             st.markdown("<br>", unsafe_allow_html=True)
