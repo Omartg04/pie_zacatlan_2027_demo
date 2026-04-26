@@ -1,4 +1,3 @@
-
 """
 M5 — Base de Contactos Segmentada
 Inteligencia Electoral Zacatlán · JCLY Morena 2026
