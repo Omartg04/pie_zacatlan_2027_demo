@@ -1,3 +1,4 @@
+
 """
 M5 — Base de Contactos Segmentada
 Inteligencia Electoral Zacatlán · JCLY Morena 2026
@@ -1495,6 +1496,15 @@ with tab_resultados:
     df_camp      = _cargar_campanas()
     _es_tecnico  = puede("puede_enviar_sms")
 
+    # ── DEBUG TEMPORAL — quitar cuando se confirme que funciona en Cloud ──────
+    if _es_tecnico:
+        st.caption(
+            f"🔧 DEBUG (solo técnico): es_tecnico={_es_tecnico} · "
+            f"campanas={len(df_camp)} · "
+            f"session_keys={list(st.session_state.keys())[:6]}"
+        )
+    # ─────────────────────────────────────────────────────────────────────────
+
     st.markdown("<div class='section-hdr'>🚀 Campañas ejecutadas</div>",
                 unsafe_allow_html=True)
 
@@ -1527,10 +1537,7 @@ with tab_resultados:
                 try:
                     # ── Leer según extensión ──────────────────────────────
                     _fname = _f_camp.name.lower()
-                    _ENTREGADOS = {
-                        "aprobado", "entregado", "delivered",
-                        "leído", "leido", "read", "sent", "enviado",
-                    }
+                    _ENTREGADOS = {"aprobado", "entregado", "delivered"}
 
                     if _fname.endswith(".xlsx"):
                         # Formato LabsMobile real: xlsx, sin header, 9 cols
@@ -1547,42 +1554,39 @@ with tab_resultados:
                         _es_labsmobile = True
 
                     else:
-                        # CSV LabsMobile — puede tener formato malformado con comillas dobles
+                        # CSV: detectar separador y si tiene header
                         _raw_txt = _f_camp.read().decode("utf-8-sig", errors="replace")
                         _primera = _raw_txt.split("\n")[0]
+                        _sep = ";" if _primera.count(";") > _primera.count(",") else ","
                         _tiene_header = "fecha" in _primera.lower() or "segmento" in _primera.lower()
 
                         if _tiene_header:
-                            _sep = ";" if _primera.count(";") > _primera.count(",") else ","
+                            # Formato interno con header — guardar directo
                             _df_nuevo = pd.read_csv(io.StringIO(_raw_txt), sep=_sep)
                             _es_labsmobile = False
                         else:
-                            # Parser robusto para CSV LabsMobile con comillas escapadas
-                            import re as _re
-                            _LM_COLS_9 = [
-                                "id_mensaje", "cuenta", "numero", "texto",
-                                "fecha_envio", "costo", "estado", "fecha_estado", "flag",
-                            ]
-                            def _parse_lm_csv(raw):
-                                _rows = []
-                                for _line in raw.splitlines():
-                                    _line = _line.strip()
-                                    if not _line:
-                                        continue
-                                    _line = _line.lstrip('"')
-                                    _parts = _re.split(r';""|;"', _line)
-                                    _parts = [p.strip('"').replace('""', '"') for p in _parts]
-                                    # Limpiar artefacto de coma en mensaje: '"," texto'
-                                    if len(_parts) >= 4:
-                                        _parts[3] = _parts[3].replace('",\"', ' ').replace('\"', '').strip()
-                                    _rows.append(_parts)
-                                _max = max(len(r) for r in _rows) if _rows else 9
-                                _rows = [r + [""] * (_max - len(r)) for r in _rows]
-                                _cols = _LM_COLS_9[:_max] if _max <= 9 else _LM_COLS_9
-                                return pd.DataFrame(_rows, columns=_cols[:_max])
-
-                            _df_lm = _parse_lm_csv(_raw_txt)
-                            _df_lm["label"] = ""
+                            # CSV LabsMobile sin header
+                            _n_cols = len(_primera.split(_sep))
+                            if _n_cols >= 11:
+                                _LM_COLS_11 = [
+                                    "id_mensaje", "cuenta", "numero", "texto",
+                                    "fecha_envio", "label", "subid2", "costo",
+                                    "estado", "fecha_estado", "flag",
+                                ]
+                                _df_lm = pd.read_csv(
+                                    io.StringIO(_raw_txt), sep=_sep,
+                                    header=None, names=_LM_COLS_11, dtype=str,
+                                )
+                            else:
+                                _LM_COLS_9 = [
+                                    "id_mensaje", "cuenta", "numero", "texto",
+                                    "fecha_envio", "costo", "estado", "fecha_estado", "flag",
+                                ]
+                                _df_lm = pd.read_csv(
+                                    io.StringIO(_raw_txt), sep=_sep,
+                                    header=None, names=_LM_COLS_9, dtype=str,
+                                )
+                                _df_lm["label"] = ""
                             _es_labsmobile = True
 
                     if _es_labsmobile:
@@ -1627,26 +1631,23 @@ with tab_resultados:
                             "tasa_entrega", "label", "notas",
                         ]]
 
-                        # Preview con desglose de estados reales
+                        # Preview
                         st.markdown("**Vista previa:**")
                         _prev = _df_nuevo[[
                             "label", "total_destinatarios", "enviados", "fallidos", "tasa_entrega"
                         ]].copy()
                         _prev.columns = ["Nombre campaña", "Total", "Entregados", "Fallidos", "Tasa %"]
                         st.dataframe(_prev, hide_index=True, use_container_width=True)
-                        # Mostrar estados únicos detectados para diagnóstico
-                        _estados_raw = _df_lm["estado"].str.strip().value_counts()
-                        _estados_str = " · ".join([f"{v} {k}" for k, v in _estados_raw.items()])
-                        st.caption(f"Estados detectados en el archivo: {_estados_str}")
 
-                    # ── Guardar (session_state + disco si es posible) ─────
+                    # ── Guardar ───────────────────────────────────────────
                     _n_guardadas = len(_df_nuevo)
-                    _df_exist = _cargar_campanas()
-                    if not _df_exist.empty:
+                    os.makedirs(os.path.dirname(CAMPANAS_PATH), exist_ok=True)
+                    if os.path.exists(CAMPANAS_PATH):
+                        _df_exist = pd.read_csv(CAMPANAS_PATH)
                         _df_nuevo = pd.concat([_df_exist, _df_nuevo], ignore_index=True)
-                    _persistir_campanas(_df_nuevo)
+                    _df_nuevo.to_csv(CAMPANAS_PATH, index=False, encoding="utf-8-sig")
                     st.session_state["_camp_file_procesado"] = _camp_file_id
-                    st.success(f"✅ Resultados cargados: {_n_guardadas} campaña(s).")
+                    st.success(f"✅ Resultados cargados: {_n_guardadas} campaña(s). Refresca la página para ver el resumen actualizado.")
                 except Exception as e:
                     st.error(f"No se pudo procesar el archivo: {e}")
 
@@ -1768,63 +1769,67 @@ with tab_resultados:
                 unsafe_allow_html=True,
             )
 
-            # Editor inline — expander visible solo para técnico
-            if _es_tecnico:
-                with st.expander("✏️ Editar · Eliminar campaña", expanded=False):
-                    _ec1, _ec2, _ec3 = st.columns([2, 1, 1])
-                    with _ec1:
-                        _inp_nombre = st.text_input(
-                            "Nombre de campaña",
-                            value=_nombre_actual,
-                            placeholder="Ej: Semana 1-2 Primer contacto",
-                            key=f"edit_nombre_{_label_key}",
-                            label_visibility="collapsed",
-                        )
-                    with _ec2:
-                        _inp_seg = st.text_input(
-                            "Segmento",
-                            value=_segmento_actual,
-                            placeholder="Ej: Persuadibles",
-                            key=f"edit_seg_{_label_key}",
-                            label_visibility="collapsed",
-                        )
-                    with _ec3:
-                        _inp_tema = st.text_input(
-                            "Tema",
-                            value=_tema_actual,
-                            placeholder="Ej: Seguridad",
-                            key=f"edit_tema_{_label_key}",
-                            label_visibility="collapsed",
-                        )
-                    _btn_col, _del_col = st.columns([3, 1])
-                    with _btn_col:
-                        if st.button("💾 Guardar", key=f"btn_edit_{_label_key}", type="primary", use_container_width=True):
-                            _ok, _err = _guardar_edicion_campana(_label_key, _inp_nombre, _inp_seg, _inp_tema)
-                            if _ok:
-                                st.success("✅ Guardado")
-                                st.rerun()
-                            else:
-                                st.error(f"No se pudo guardar: {_err}")
-                    with _del_col:
+            # Editor inline (expander colapsado)
+            with st.expander("✏️ Editar nombre, segmento y tema", expanded=False):
+                _ec1, _ec2, _ec3 = st.columns([2, 1, 1])
+                with _ec1:
+                    _inp_nombre = st.text_input(
+                        "Nombre de campaña",
+                        value=_nombre_actual,
+                        placeholder="Ej: Semana 1-2 Primer contacto",
+                        key=f"edit_nombre_{_label_key}",
+                        label_visibility="collapsed",
+                    )
+                with _ec2:
+                    _inp_seg = st.text_input(
+                        "Segmento",
+                        value=_segmento_actual,
+                        placeholder="Ej: Persuadibles",
+                        key=f"edit_seg_{_label_key}",
+                        label_visibility="collapsed",
+                    )
+                with _ec3:
+                    _inp_tema = st.text_input(
+                        "Tema",
+                        value=_tema_actual,
+                        placeholder="Ej: Seguridad",
+                        key=f"edit_tema_{_label_key}",
+                        label_visibility="collapsed",
+                    )
+                _btn_col_guardar, _btn_col_eliminar = st.columns([1, 1])
+                with _btn_col_guardar:
+                    if st.button("💾 Guardar", key=f"btn_edit_{_label_key}", type="primary",
+                                 use_container_width=True):
+                        _ok, _err = _guardar_edicion_campana(_label_key, _inp_nombre, _inp_seg, _inp_tema)
+                        if _ok:
+                            st.success("✅ Guardado")
+                            st.rerun()
+                        else:
+                            st.error(f"No se pudo guardar: {_err}")
+
+                # Botón eliminar — solo técnico
+                if _es_tecnico:
+                    with _btn_col_eliminar:
                         _confirm_key = f"confirm_del_{_label_key}"
-                        if not st.session_state.get(_confirm_key):
+                        if not st.session_state.get(_confirm_key, False):
                             if st.button("🗑️ Eliminar", key=f"btn_del_{_label_key}",
                                          use_container_width=True):
                                 st.session_state[_confirm_key] = True
                                 st.rerun()
                         else:
-                            st.warning("¿Confirmar?")
-                            _ca, _cb = st.columns(2)
-                            with _ca:
-                                if st.button("✅ Sí", key=f"btn_del_ok_{_label_key}",
+                            st.warning(f"¿Eliminar «{_titulo_display}»? Esta acción no se puede deshacer.")
+                            _col_si, _col_no = st.columns(2)
+                            with _col_si:
+                                if st.button("✅ Sí, eliminar", key=f"btn_del_confirm_{_label_key}",
                                              type="primary", use_container_width=True):
-                                    _df_edit = _cargar_campanas()
-                                    _df_edit = _df_edit[_df_edit["label"] != _label_key]
-                                    _persistir_campanas(_df_edit)
+                                    _df_sin = _cargar_campanas()
+                                    _df_sin = _df_sin[_df_sin["label"] != _label_key].reset_index(drop=True)
+                                    _persistir_campanas(_df_sin)
                                     st.session_state.pop(_confirm_key, None)
+                                    st.success(f"✅ Campaña «{_titulo_display}» eliminada.")
                                     st.rerun()
-                            with _cb:
-                                if st.button("❌ No", key=f"btn_del_no_{_label_key}",
+                            with _col_no:
+                                if st.button("❌ Cancelar", key=f"btn_del_cancel_{_label_key}",
                                              use_container_width=True):
                                     st.session_state.pop(_confirm_key, None)
                                     st.rerun()
